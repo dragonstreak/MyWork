@@ -1,0 +1,68 @@
+﻿
+body { margin:0px;}
+
+#PageTitle {}
+
+#TopMenuContainer {background: url(../images/nav-bg-a.png) repeat-x; margin:0px; padding:0px; font: normal normal normal 14px/normal "Arial", sans-serif; }
+
+#TopMenuContainer li 
+{
+    display: -moz-inline-stack;
+    display: inline; /*IE7 */
+    display: inline-block;
+    margin: 6px 2px;
+    text-align: center;
+    font-size: .9em;
+    text-transform: uppercase;
+    font-weight: bold;    
+}
+
+#TopMenuContainer span 
+{
+    display: block;
+    float: left;
+    min-width: 60px;
+    height: 23px;
+    padding: 0 9px 0 6px;
+    background:url(../images/nav-items-a.png) 100% 0 no-repeat;
+    line-height: 22px;
+}
+
+
+#TopMenuContainer A 
+{
+    font-size:0.9em;
+    display: block;
+    float: left;
+    padding: 0 0 0 3px;
+    background: url(../images/nav-items-a.png) no-repeat;
+    color: #eee;
+    text-shadow: #222 0 1px 0;    
+}
+
+#TopMenuContainer ul li a:hover,
+#TopMenuContainer ul li a:focus,
+#TopMenuContainer ul li a.active {
+    background-position: 0 -23px;
+    color: #fff;
+}
+
+#TopMenuContainer ul li a:hover span,
+#TopMenuContainer ul li a:focus span,
+#TopMenuContainer ul li a.active span {
+    background-position: 100% -23px;
+}
+
+#LeftMenuContainter {max-height:1680px; min-height:600px; float:left; background-color:#555555;  font: normal normal normal 14px/normal "Arial", sans-serif;}
+
+#TopMenuLeftFiller {float:left}
+
+.NoMarginPadding {margin:0px; padding:0px;}
+
+.LeftMenuWidth { width:160px; max-width:180px; min-width:120px}
+
+.TopMenuHeight { height:38px;}
+
+.LeftMenu {float:left; background:#555555; text-align:left}
+
+.TopMenu-Selected { color:White;}

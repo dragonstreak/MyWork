@@ -1,0 +1,117 @@
+﻿<table class="bg">
+        <tr>
+            <td>
+                Code:
+            </td>
+            <td>
+                {$T.Code}
+            </td>
+            <td>
+                E_Name:
+            </td>
+            <td>
+                {$T.E_Name}
+            </td>
+        </tr>
+        <tr>
+            <td>
+                C_Name:
+            </td>
+            <td>
+                {$T.C_Name}
+            </td>
+            <td>
+                EMail:
+            </td>
+            <td>
+                {$T.Mail}
+            </td>
+        </tr>
+        <tr>
+            <td>
+                City:
+            </td>
+            <td>
+                <input type="hidden" id="selectedCity" value="{$T.CityId}" />
+            </td>
+            <td>
+                Department:
+            </td>
+            <td>
+                <input type="hidden" id="selectedDep" value="{$T.DepId}" />
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Position:
+            </td>
+            <td>
+                <input type="hidden" id="selectedPosition" value="{$T.PositionID}" />
+            </td>
+            <td>
+                Line Manager:
+            </td>
+            <td>
+                <input type="hidden" id="selectedManager" value="{$T.LineManager}" />
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Extension:
+            </td>
+            <td>
+                {$T.WorkPhone}
+            </td>
+            <td>
+                Comm. Date:
+            </td>
+            <td>                
+                {$T.CommencementDate}
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Password:
+            </td>
+            <td>
+                {$T.Password}
+            </td>
+            <td>
+                PIN Code:
+            </td>
+            <td>
+                {$T.PIN}
+            </td>
+        </tr>
+        <tr>
+            <td>
+                OnDuty:
+            </td>
+            <td colspan="3" align="left">
+                
+                <asp:DropDownList runat="server" ID="cbDuty" Width="127px">
+                <asp:ListItem Text="Left the Job" Value="0">
+                </asp:ListItem>
+                <asp:ListItem Text="On the Job" Value="1" Selected="True">
+                </asp:ListItem>
+                </asp:DropDownList>
+                <input type="hidden" id="selectedDuty" value="{$T.Onduty}" />
+            </td>
+        </tr>
+        <tr>
+            <td class="style1">
+                Remark:
+            </td>
+            <td colspan="3" class="style1">
+                {$T.Remark}
+            </td>
+        </tr>
+        <tr>
+            <td colspan="4" align="center">
+                <input type="button" value="Save" class="btnsave" />
+
+                
+                <input type="button" name="btnCancel" value="Cancel" class="btnclose"/>
+        </td>
+        </tr>
+    </table>

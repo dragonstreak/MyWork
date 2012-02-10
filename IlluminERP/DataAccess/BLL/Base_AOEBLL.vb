@@ -26,6 +26,11 @@ Namespace BLL
             Return AOEDAL.GetAOEInfoByID(Id)
         End Function
 
+        Public Sub Test()
+
+        End Sub
+
+
     End Class
 End Namespace
 

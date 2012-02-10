@@ -1,0 +1,940 @@
+﻿<%@ Page Language="VB" AutoEventWireup="false" CodeFile="ProjectCost.aspx.vb" Inherits="PMS_ProjectCost"
+    EnableEventValidation="false" %>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <title>Cost</title>
+    <base target="_self" />
+    <link href="../css/style.css" rel="stylesheet" type="text/css" />
+    <script src="../js/validation.js" type="text/javascript"></script>
+    <script src="../js/operation.js" type="text/javascript"></script>
+</head>
+<body>
+    <form id="form1" runat="server">
+    <div style="width: 100%; text-align: center">
+        <div style="width: 100%; text-align: center; vertical-align: middle">
+            <input type="button" name="btnCancel" value="Close" class="btnclose" onclick="javascript:CloseModelWindow();" />
+            <asp:DropDownList runat="server" AutoPostBack="true" ID="ddlCity">
+            </asp:DropDownList>
+        </div>
+        <div style="width: 100%">
+            <telerik:RadTabStrip runat="server" MultiPageID="RadMultiPage1" ID="RadTabStrip3"
+                SelectedIndex="0" Height="100%" Width="100%">
+                <Tabs>
+                    <telerik:RadTab Text="FLW Direct Cost">
+                    </telerik:RadTab>
+                    <telerik:RadTab Text="FLW time Cost">
+                    </telerik:RadTab>
+                    <telerik:RadTab Text="CATI&amp;nbsp; Direct Cost">
+                    </telerik:RadTab>
+                    <telerik:RadTab Text="CATI Time Cost">
+                    </telerik:RadTab>
+                    <telerik:RadTab Text="EDP/IT Direct Cost">
+                    </telerik:RadTab>
+                    <telerik:RadTab Text="EDP/IT&amp;nbsp;Time&amp;nbsp;Cost">
+                    </telerik:RadTab>
+                    <telerik:RadTab Text="QC&amp;nbsp;Direct Cost">
+                    </telerik:RadTab>
+                    <telerik:RadTab Text="QC&amp;nbsp;Time&amp;nbsp;Cost">
+                    </telerik:RadTab>
+                    <telerik:RadTab Text="CMR&amp;nbsp;Direct Cost">
+                    </telerik:RadTab>
+                    <telerik:RadTab Text="CMR&amp;nbsp;Time Cost">
+                    </telerik:RadTab>
+                </Tabs>
+            </telerik:RadTabStrip>
+            <telerik:RadMultiPage ID="RadMultiPage1" SelectedIndex="0" runat="server" CssClass="pageView"
+                Width="100%">
+                <telerik:RadPageView ID="RadPageView1" TabIndex="0" runat="server" Width="100%" Height="100%">
+                    <table style="width: 100%">
+                        <tr style="width: 100%">
+                            <td style="width: 200px; text-align: right">
+                                Select Cost Category:
+                            </td>
+                            <td style="width: 300px; text-align: left">
+                                <asp:DropDownList Width="300px" runat="server" ID="cbFWCostCategory">
+                                </asp:DropDownList>
+                            </td>
+                            <td style="width: 300px">
+                            </td>
+                            <td>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: right">
+                                Unit Price:
+                            </td>
+                            <td style="text-align: left" colspan="3">
+                                <telerik:RadNumericTextBox runat="server" ID="txtFWUnitPrice">
+                                </telerik:RadNumericTextBox>
+                                Quantity:
+                                <telerik:RadNumericTextBox runat="server" ID="txtFWQuantity">
+                                </telerik:RadNumericTextBox>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: right">
+                                Description:
+                            </td>
+                            <td colspan="3" style="text-align: left">
+                                <telerik:RadTextBox ID="txtFWDescription" runat="server">
+                                </telerik:RadTextBox>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="4" style="text-align: center;">
+                                <asp:Button ID="btnAddFWDirectCost" runat="server" Text="Add" Font-Names="Arial"
+                                    Font-Size="9pt" CssClass="btnadd" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width: 100%" colspan="4">
+                                <telerik:RadGrid ID="rdFWDirectCost" runat="server" AutoGenerateColumns="False" AutoGenerateDeleteColumn="True"
+                                    GridLines="None" AllowSorting="True">
+                                    <MasterTableView AllowPaging="True" PageSize="5">
+                                        <%--<RowIndicatorColumn Visible="False">
+                                                <HeaderStyle Width="20px" />
+                                            </RowIndicatorColumn>
+                                            <ExpandCollapseColumn Resizable="False" Visible="False">
+                                                <HeaderStyle Width="20px" />
+                                            </ExpandCollapseColumn>--%>
+                                        <Columns>
+                                            <telerik:GridBoundColumn DataField="Id" HeaderText="Id" UniqueName="Id" Visible="False">
+                                            </telerik:GridBoundColumn>
+                                            <telerik:GridBoundColumn DataField="SubProId" HeaderText="SubProId" UniqueName="SubProId"
+                                                Visible="False">
+                                            </telerik:GridBoundColumn>
+                                            <telerik:GridBoundColumn DataField="CostCategoryId" HeaderText="Cost Category" UniqueName="Samplesize">
+                                                <%--  <HeaderStyle Font-Bold="False" Font-Italic="False" Font-Overline="False" Font-Strikeout="False"
+                                                        Font-Underline="False" HorizontalAlign="Center" Width="200px" Wrap="True" />
+                                                    <ItemStyle HorizontalAlign="Left" />--%>
+                                            </telerik:GridBoundColumn>
+                                            <telerik:GridBoundColumn DataField="CityId" HeaderText="CityId" UniqueName="City"
+                                                Visible="False">
+                                                <%--<HeaderStyle Font-Bold="False" Font-Italic="False" Font-Overline="False" Font-Strikeout="False"
+                                                        Font-Underline="False" HorizontalAlign="Center" Width="100px" Wrap="True" />--%>
+                                            </telerik:GridBoundColumn>
+                                            <telerik:GridBoundColumn DataField="UnitPrice" HeaderText="Unit Price" UniqueName="UnitPrice">
+                                                <%--<HeaderStyle Width="50px" />
+                                                    <ItemStyle Font-Bold="False" Font-Italic="False" Font-Overline="False" Font-Strikeout="False"
+                                                        Font-Underline="False" HorizontalAlign="Right" Wrap="True" />--%>
+                                            </telerik:GridBoundColumn>
+                                            <telerik:GridBoundColumn DataField="Quantity" HeaderText="Quantity" UniqueName="Quantity">
+                                                <%--<HeaderStyle Width="50px" />
+                                                    <ItemStyle Font-Bold="False" Font-Italic="False" Font-Overline="False" Font-Strikeout="False"
+                                                        Font-Underline="False" HorizontalAlign="Right" Wrap="True" />--%>
+                                            </telerik:GridBoundColumn>
+                                            <telerik:GridBoundColumn DataField="TotalCost" HeaderText="Total Cost" UniqueName="TotalCost"
+                                                DataFormatString="{0:N2}">
+                                                <%--<HeaderStyle Width="60px" />
+                                                    <ItemStyle Font-Bold="False" Font-Italic="False" Font-Overline="False" Font-Strikeout="False"
+                                                        Font-Underline="False" HorizontalAlign="Right" Wrap="True" BackColor="Silver" />--%>
+                                            </telerik:GridBoundColumn>
+                                            <telerik:GridBoundColumn DataField="Description" HeaderText="Description" UniqueName="Description">
+                                                <%--<HeaderStyle Font-Bold="False" Font-Italic="False" Font-Overline="False" Font-Strikeout="False"
+                                                        Font-Underline="False" HorizontalAlign="Center" Wrap="True" />--%>
+                                            </telerik:GridBoundColumn>
+                                            <telerik:GridButtonColumn CommandName="Delete" Text="Delete" UniqueName="AutoGeneratedDeleteColumn">
+                                            </telerik:GridButtonColumn>
+                                        </Columns>
+                                        <HeaderStyle Font-Bold="False" Font-Italic="False" Font-Overline="False" Font-Strikeout="False"
+                                            Font-Underline="False" HorizontalAlign="Center" Wrap="True" />
+                                    </MasterTableView>
+                                </telerik:RadGrid>
+                            </td>
+                        </tr>
+                    </table>
+                </telerik:RadPageView>
+                <telerik:RadPageView ID="RadPageView2" TabIndex="1" runat="server" Width="100%" Height="100%">
+                    <telerik:RadScriptManager ID="RadScriptManager2" runat="server" />
+                    <telerik:RadCodeBlock ID="RadCodeBlock1" runat="server">
+                        <script type="text/javascript">
+                            var FWTime_hasChanges, FWTime_inputs, FWTime_dropdowns, FWTime_editedRow;
+                            function FWTime_RowDblClick(sender, eventArgs) {
+
+                                FWTime_editedRow = eventArgs.get_itemIndexHierarchical();
+                                sender.get_masterTableView().editItem(eventArgs.get_itemIndexHierarchical());
+                            }
+                            function FWTime_RowClick(sender, eventArgs) {
+                                if (FWTime_editedRow && FWTime_hasChanges) {
+                                    FWTime_hasChanges = false;
+                                    if (confirm("Update changes?")) {
+
+                                        $find("<%= wgdFWTimeCost.MasterTableView.ClientID %>").updateItem(FWTime_editedRow);
+                                    }
+                                }
+                            }
+                            function FWTime_GridCommand(sender, args) {
+                                if (args.get_commandName() != "Edit") {
+                                    FWTime_editedRow = null;
+                                }
+                            }
+                            function FWTime_GridCreated(sender, eventArgs) {
+                                var gridElement = sender.get_element();
+                                var elementsToUse = [];
+                                inputs = gridElement.getElementsByTagName("input");
+                                for (var i = 0; i < inputs.length; i++) {
+                                    var lowerType = inputs[i].type.toLowerCase();
+                                    if (lowerType == "hidden" || lowerType == "button") {
+                                        continue;
+                                    }
+
+                                    Array.add(elementsToUse, inputs[i]);
+                                    inputs[i].onchange = FWTime_TrackChanges;
+                                }
+
+
+                                //                                setTimeout(
+                                //                                        function () {
+                                //                                            if (elementsToUse[0])
+                                //                                                elementsToUse[0].focus();
+                                //                                        }, 
+                                //                                        100);
+                            }
+                            function FWTime_TrackChanges(e) {
+                                FWTime_hasChanges = true;
+                            }
+                        </script>
+                    </telerik:RadCodeBlock>
+                    <telerik:RadAjaxManager ID="RadAjaxManager7" runat="server">
+                        <AjaxSettings>
+                            <telerik:AjaxSetting AjaxControlID="wgdFWTimeCost">
+                                <UpdatedControls>
+                                    <telerik:AjaxUpdatedControl ControlID="wgdFWTimeCost" />
+                                </UpdatedControls>
+                            </telerik:AjaxSetting>
+                            <telerik:AjaxSetting AjaxControlID="wgdCATITimeCost">
+                                <UpdatedControls>
+                                    <telerik:AjaxUpdatedControl ControlID="wgdCATITimeCost" />
+                                </UpdatedControls>
+                            </telerik:AjaxSetting>
+                            <telerik:AjaxSetting AjaxControlID="wgdEDPTimeCost">
+                                <UpdatedControls>
+                                    <telerik:AjaxUpdatedControl ControlID="wgdEDPTimeCost" />
+                                </UpdatedControls>
+                            </telerik:AjaxSetting>
+                            <telerik:AjaxSetting AjaxControlID="wgdQCTimeCost">
+                                <UpdatedControls>
+                                    <telerik:AjaxUpdatedControl ControlID="wgdQCTimeCost" />
+                                </UpdatedControls>
+                            </telerik:AjaxSetting>
+                            <telerik:AjaxSetting AjaxControlID="wgdCMRTimeCost">
+                                <UpdatedControls>
+                                    <telerik:AjaxUpdatedControl ControlID="wgdCMRTimeCost" />
+                                </UpdatedControls>
+                            </telerik:AjaxSetting>
+                            <telerik:AjaxSetting AjaxControlID="rdFWDirectCost">
+                                <UpdatedControls>
+                                    <telerik:AjaxUpdatedControl ControlID="rdFWDirectCost" />
+                                </UpdatedControls>
+                            </telerik:AjaxSetting>
+                            <telerik:AjaxSetting AjaxControlID="rdEDPDirectCost">
+                                <UpdatedControls>
+                                    <telerik:AjaxUpdatedControl ControlID="rdEDPDirectCost" />
+                                </UpdatedControls>
+                            </telerik:AjaxSetting>
+                            <telerik:AjaxSetting AjaxControlID="rdQCDirectCost">
+                                <UpdatedControls>
+                                    <telerik:AjaxUpdatedControl ControlID="rdQCDirectCost" />
+                                </UpdatedControls>
+                            </telerik:AjaxSetting>
+                            <telerik:AjaxSetting AjaxControlID="rdCMRDirectCost">
+                                <UpdatedControls>
+                                    <telerik:AjaxUpdatedControl ControlID="rdCMRDirectCost" />
+                                </UpdatedControls>
+                            </telerik:AjaxSetting>
+                            <telerik:AjaxSetting AjaxControlID="rdCATIDirectCost">
+                                <UpdatedControls>
+                                    <telerik:AjaxUpdatedControl ControlID="rdCATIDirectCost" />
+                                </UpdatedControls>
+                            </telerik:AjaxSetting>
+                           <%-- <telerik:AjaxSetting AjaxControlID="btnAddCATIDirectCost">
+                                <UpdatedControls>
+                                    <telerik:AjaxUpdatedControl ControlID="rdCATIDirectCost" />
+                                    <telerik:AjaxUpdatedControl ControlID="cbCATICostCategory" />
+                                    <telerik:AjaxUpdatedControl ControlID="txtCATIUnitPrice" />
+                                    <telerik:AjaxUpdatedControl ControlID="txtCATIQuantity" />
+                                    <telerik:AjaxUpdatedControl ControlID="txtCATIDescription" />
+                                </UpdatedControls>
+                            </telerik:AjaxSetting>
+                            <telerik:AjaxSetting AjaxControlID ="btnAddFWDirectCost">
+                            <UpdatedControls>
+                            <telerik:AjaxUpdatedControl ControlID="cbFWCostCategory" />
+                            <telerik:AjaxUpdatedControl ControlID="txtFWUnitPrice" />
+                            <telerik:AjaxUpdatedControl ControlID="txtFWQuantity" />
+                            <telerik:AjaxUpdatedControl ControlID="txtFWDescription" />
+                            
+                            </UpdatedControls>
+                            </telerik:AjaxSetting>--%>
+                        </AjaxSettings>
+                    </telerik:RadAjaxManager>
+                    <telerik:RadGrid ID="wgdFWTimeCost" runat="server" Width="96%" GridLines="None" AutoGenerateColumns="false"
+                        AllowSorting="True" ShowFooter="True">
+                        <MasterTableView DataKeyNames="StageId" AllowMultiColumnSorting="True" Width="100%"
+                            CommandItemDisplay="None" EditMode="InPlace">
+                        </MasterTableView>
+                        <ClientSettings>
+                            <ClientEvents OnRowClick="FWTime_RowClick" OnRowDblClick="FWTime_RowDblClick" OnGridCreated="FWTime_GridCreated"
+                                OnCommand="FWTime_GridCommand" />
+                        </ClientSettings>
+                    </telerik:RadGrid>
+                </telerik:RadPageView>
+                <telerik:RadPageView ID="RadPageView3" TabIndex="2" runat="server" Width="100%" Height="100%">
+                    <table style="width: 100%">
+                        <tr style="width: 200px; text-align: right">
+                            <td style="width: 200px; text-align: right">
+                                Select Cost Category:
+                            </td>
+                            <td style="width: 300px; text-align: left">
+                                <asp:DropDownList Width="300px" runat="server" ID="cbCATICostCategory">
+                                </asp:DropDownList>
+                            </td>
+                            <td style="width: 300px">
+                            </td>
+                            <td>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: right">
+                                Unit Price:
+                            </td>
+                            <td style="text-align: left" colspan="3">
+                                <telerik:RadNumericTextBox runat="server" ID="txtCATIUnitPrice">
+                                </telerik:RadNumericTextBox>
+                                Quantity:
+                                <telerik:RadNumericTextBox runat="server" ID="txtCATIQuantity">
+                                </telerik:RadNumericTextBox>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: right">
+                                Description:
+                            </td>
+                            <td colspan="3" style="text-align: left">
+                                <telerik:RadTextBox ID="txtCATIDescription" runat="server">
+                                </telerik:RadTextBox>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="4" style="text-align: center;">
+                                <asp:Button ID="btnAddCATIDirectCost" runat="server" Text="Add" Font-Names="Arial"
+                                    Font-Size="9pt" CssClass="btnadd" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width: 100%" colspan="4">
+                                <telerik:RadGrid ID="rdCATIDirectCost" runat="server" AutoGenerateColumns="False"
+                                    AutoGenerateDeleteColumn="True" GridLines="None" AllowSorting="True">
+                                    <MasterTableView AllowPaging="True" PageSize="5">
+                                        <RowIndicatorColumn Visible="False">
+                                            <HeaderStyle Width="20px" />
+                                        </RowIndicatorColumn>
+                                        <ExpandCollapseColumn Resizable="False" Visible="False">
+                                            <HeaderStyle Width="20px" />
+                                        </ExpandCollapseColumn>
+                                        <Columns>
+                                            <telerik:GridBoundColumn DataField="Id" HeaderText="Id" UniqueName="Id" Visible="False">
+                                            </telerik:GridBoundColumn>
+                                            <telerik:GridBoundColumn DataField="SubProId" HeaderText="SubProId" UniqueName="SubProId"
+                                                Visible="False">
+                                            </telerik:GridBoundColumn>
+                                            <telerik:GridBoundColumn DataField="CostCategoryId" HeaderText="Cost Category" UniqueName="Samplesize">
+                                                <HeaderStyle Font-Bold="False" Font-Italic="False" Font-Overline="False" Font-Strikeout="False"
+                                                    Font-Underline="False" HorizontalAlign="Center" Width="200px" Wrap="True" />
+                                                <ItemStyle HorizontalAlign="Left" />
+                                            </telerik:GridBoundColumn>
+                                            <telerik:GridBoundColumn DataField="CityId" HeaderText="CityId" UniqueName="City"
+                                                Visible="False">
+                                                <HeaderStyle Font-Bold="False" Font-Italic="False" Font-Overline="False" Font-Strikeout="False"
+                                                    Font-Underline="False" HorizontalAlign="Center" Width="100px" Wrap="True" />
+                                            </telerik:GridBoundColumn>
+                                            <telerik:GridBoundColumn DataField="UnitPrice" HeaderText="Unit Price" UniqueName="UnitPrice">
+                                                <HeaderStyle Width="50px" />
+                                                <ItemStyle Font-Bold="False" Font-Italic="False" Font-Overline="False" Font-Strikeout="False"
+                                                    Font-Underline="False" HorizontalAlign="Right" Wrap="True" />
+                                            </telerik:GridBoundColumn>
+                                            <telerik:GridBoundColumn DataField="Quantity" HeaderText="Quantity" UniqueName="Quantity">
+                                                <HeaderStyle Width="50px" />
+                                                <ItemStyle Font-Bold="False" Font-Italic="False" Font-Overline="False" Font-Strikeout="False"
+                                                    Font-Underline="False" HorizontalAlign="Right" Wrap="True" />
+                                            </telerik:GridBoundColumn>
+                                            <telerik:GridBoundColumn DataField="TotalCost" HeaderText="Total Cost" UniqueName="TotalCost"
+                                                DataFormatString="{0:N2}">
+                                                <HeaderStyle Width="60px" />
+                                                <ItemStyle Font-Bold="False" Font-Italic="False" Font-Overline="False" Font-Strikeout="False"
+                                                    Font-Underline="False" HorizontalAlign="Right" Wrap="True" BackColor="Silver" />
+                                            </telerik:GridBoundColumn>
+                                            <telerik:GridBoundColumn DataField="Description" HeaderText="Description" UniqueName="Description">
+                                                <HeaderStyle Font-Bold="False" Font-Italic="False" Font-Overline="False" Font-Strikeout="False"
+                                                    Font-Underline="False" HorizontalAlign="Center" Wrap="True" />
+                                            </telerik:GridBoundColumn>
+                                            <telerik:GridButtonColumn CommandName="Delete" Text="Delete" UniqueName="AutoGeneratedDeleteColumn">
+                                                <HeaderStyle Width="45px" />
+                                            </telerik:GridButtonColumn>
+                                        </Columns>
+                                        <HeaderStyle Font-Bold="False" Font-Italic="False" Font-Overline="False" Font-Strikeout="False"
+                                            Font-Underline="False" HorizontalAlign="Center" Wrap="True" />
+                                    </MasterTableView>
+                                </telerik:RadGrid>
+                            </td>
+                        </tr>
+                    </table>
+                </telerik:RadPageView>
+                <telerik:RadPageView ID="RadPageView4" TabIndex="3" runat="server" Width="100%" Height="100%">
+                    <telerik:RadCodeBlock ID="RadCodeBlock2" runat="server">
+                        <script type="text/javascript">
+                            var CATITime_hasChanges, CATITime_inputs, CATITime_dropdowns, CATITime_editedRow;
+                            function CATITime_RowDblClick(sender, eventArgs) {
+                                CATITime_editedRow = eventArgs.get_itemIndexHierarchical();
+                                //alert(CATITime_editedRow);
+                                $find("<%= wgdCATITimeCost.MasterTableView.ClientID %>").editItem(CATITime_editedRow);
+                            }
+                            function CATITime_RowClick(sender, eventArgs) {
+                                if (CATITime_editedRow && CATITime_hasChanges) {
+                                    CATITime_hasChanges = false;
+                                    if (confirm("Update changes?")) {
+
+                                        $find("<%= wgdCATITimeCost.MasterTableView.ClientID %>").updateItem(CATITime_editedRow);
+                                    }
+                                }
+                            }
+                            function CATITime_GridCommand(sender, args) {
+                                if (args.get_commandName() != "Edit") {
+                                    CATITime_editedRow = null;
+                                }
+                            }
+                            function CATITime_GridCreated(sender, eventArgs) {
+                                var gridElement = sender.get_element();
+                                var elementsToUse = [];
+                                inputs = gridElement.getElementsByTagName("input");
+                                for (var i = 0; i < inputs.length; i++) {
+                                    var lowerType = inputs[i].type.toLowerCase();
+                                    if (lowerType == "hidden" || lowerType == "button") {
+                                        continue;
+                                    }
+
+                                    Array.add(elementsToUse, inputs[i]);
+                                    inputs[i].onchange = CATITime_TrackChanges;
+                                }
+
+                                //                                CATITime_dropdowns = gridElement.getElementsByTagName("select");
+                                //                                for (var i = 0; i < CATITime_dropdowns.length; i++) {
+                                //                                    CATITime_dropdowns[i].onchange = CATITime_TrackChanges;
+                                //                                }
+
+                                //setTimeout(function () { if (elementsToUse[0]) elementsToUse[0].focus(); }, 100);
+                            }
+                            function CATITime_TrackChanges(e) {
+                                CATITime_hasChanges = true;
+                            }
+                        </script>
+                    </telerik:RadCodeBlock>
+                    <telerik:RadGrid ID="wgdCATITimeCost" runat="server" Width="96%" GridLines="None"
+                        AutoGenerateColumns="false" AllowSorting="True" ShowFooter="True">
+                        <MasterTableView DataKeyNames="StageId" AllowMultiColumnSorting="True" Width="100%"
+                            CommandItemDisplay="Top" EditMode="InPlace">
+                        </MasterTableView>
+                        <ClientSettings>
+                            <ClientEvents OnRowClick="CATITime_RowClick" OnRowDblClick="CATITime_RowDblClick"
+                                OnGridCreated="CATITime_GridCreated" OnCommand="CATITime_GridCommand" />
+                        </ClientSettings>
+                    </telerik:RadGrid>
+                </telerik:RadPageView>
+                <telerik:RadPageView ID="RadPageView5" runat="server" Width="100%" Height="100%">
+                    <table style="width: 100%">
+                        <tr style="width: 200px; text-align: right">
+                            <td style="width: 200px; text-align: right">
+                                Select Cost Category:
+                            </td>
+                            <td style="width: 300px; text-align: left">
+                                <asp:DropDownList Width="300px" runat="server" ID="cbEDPCostCategory">
+                                </asp:DropDownList>
+                            </td>
+                            <td style="width: 300px">
+                            </td>
+                            <td>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: right">
+                                Unit Price:
+                            </td>
+                            <td style="text-align: left" colspan="3">
+                                <telerik:RadNumericTextBox runat="server" ID="txtEDPUnitPrice">
+                                </telerik:RadNumericTextBox>
+                                Quantity:
+                                <telerik:RadNumericTextBox runat="server" ID="txtEDPQuantity">
+                                </telerik:RadNumericTextBox>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: right">
+                                Description:
+                            </td>
+                            <td colspan="3" style="text-align: left">
+                                <telerik:RadTextBox ID="txtEDPDescription" runat="server">
+                                </telerik:RadTextBox>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="4" style="text-align: center;">
+                                <asp:Button ID="btnAddEDPDirectCost" runat="server" Text="Add" Font-Names="Arial"
+                                    Font-Size="9pt" CssClass="btnadd" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width: 100%" colspan="4">
+                                <telerik:RadGrid ID="rdEDPDirectCost" runat="server" AutoGenerateColumns="False"
+                                    AutoGenerateDeleteColumn="True" GridLines="None" AllowSorting="True" Width="96%">
+                                    <MasterTableView AllowPaging="True" PageSize="5">
+                                        <%--<RowIndicatorColumn Visible="False">
+                                                <HeaderStyle Width="20px" />
+                                            </RowIndicatorColumn>
+                                            <ExpandCollapseColumn Resizable="False" Visible="False">
+                                                <HeaderStyle Width="20px" />
+                                            </ExpandCollapseColumn>--%>
+                                        <Columns>
+                                            <telerik:GridBoundColumn DataField="Id" HeaderText="Id" UniqueName="Id" Visible="False">
+                                            </telerik:GridBoundColumn>
+                                            <telerik:GridBoundColumn DataField="SubProId" HeaderText="SubProId" UniqueName="SubProId"
+                                                Visible="False">
+                                            </telerik:GridBoundColumn>
+                                            <telerik:GridBoundColumn DataField="CostCategoryId" HeaderText="Cost Category" UniqueName="Samplesize">
+                                                <%--<HeaderStyle Font-Bold="False" Font-Italic="False" Font-Overline="False" Font-Strikeout="False"
+                                                        Font-Underline="False" HorizontalAlign="Center"  Wrap="True" />
+                                                    <ItemStyle HorizontalAlign="Left" />--%>
+                                            </telerik:GridBoundColumn>
+                                            <telerik:GridBoundColumn DataField="CityId" HeaderText="CityId" UniqueName="City"
+                                                Visible="False">
+                                                <%-- <HeaderStyle Font-Bold="False" Font-Italic="False" Font-Overline="False" Font-Strikeout="False"
+                                                        Font-Underline="False" HorizontalAlign="Center" Width="100px" Wrap="True" />--%>
+                                            </telerik:GridBoundColumn>
+                                            <telerik:GridBoundColumn DataField="UnitPrice" HeaderText="Unit Price" UniqueName="UnitPrice">
+                                                <%--<HeaderStyle Width="50px" />
+                                                    <ItemStyle Font-Bold="False" Font-Italic="False" Font-Overline="False" Font-Strikeout="False"
+                                                        Font-Underline="False" HorizontalAlign="Right" Wrap="True" />--%>
+                                            </telerik:GridBoundColumn>
+                                            <telerik:GridBoundColumn DataField="Quantity" HeaderText="Quantity" UniqueName="Quantity">
+                                                <%--HeaderStyle Width="50px" />
+                                                    <ItemStyle Font-Bold="False" Font-Italic="False" Font-Overline="False" Font-Strikeout="False"
+                                                        Font-Underline="False" HorizontalAlign="Right" Wrap="True" />--%>
+                                            </telerik:GridBoundColumn>
+                                            <telerik:GridBoundColumn DataField="TotalCost" HeaderText="Total Cost" UniqueName="TotalCost"
+                                                DataFormatString="{0:N2}">
+                                                <%-- <HeaderStyle Width="60px" />
+                                                    <ItemStyle Font-Bold="False" Font-Italic="False" Font-Overline="False" Font-Strikeout="False"
+                                                        Font-Underline="False" HorizontalAlign="Right" Wrap="True" BackColor="Silver" />--%>
+                                            </telerik:GridBoundColumn>
+                                            <telerik:GridBoundColumn DataField="Description" HeaderText="Description" UniqueName="Description">
+                                                <%-- <HeaderStyle Font-Bold="False" Font-Italic="False" Font-Overline="False" Font-Strikeout="False"
+                                                        Font-Underline="False" HorizontalAlign="Center" Wrap="True" />--%>
+                                            </telerik:GridBoundColumn>
+                                            <telerik:GridButtonColumn CommandName="Delete" Text="Delete" UniqueName="AutoGeneratedDeleteColumn">
+                                                <%--<HeaderStyle Width="45px" />--%>
+                                            </telerik:GridButtonColumn>
+                                        </Columns>
+                                        <HeaderStyle Font-Bold="False" Font-Italic="False" Font-Overline="False" Font-Strikeout="False"
+                                            Font-Underline="False" HorizontalAlign="Center" Wrap="True" />
+                                    </MasterTableView>
+                                </telerik:RadGrid>
+                            </td>
+                        </tr>
+                    </table>
+                </telerik:RadPageView>
+                <telerik:RadPageView ID="RadPageView6" runat="server" Width="100%" Height="100%">
+                    <telerik:RadCodeBlock ID="RadCodeBlock3" runat="server">
+                        <script type="text/javascript">
+                            var EDPTime_hasChanges, EDPTime_inputs, EDPTime_dropdowns, EDPTime_editedRow;
+                            function EDPTime_RowDblClick(sender, eventArgs) {
+
+                                //sender.get_masterTableView().editItem(eventArgs.get_itemIndexHierarchical());
+                                EDPTime_editedRow = eventArgs.get_itemIndexHierarchical();
+                                $find("<%= wgdEDPTimeCost.MasterTableView.ClientID %>").editItem(EDPTime_editedRow);
+                            }
+                            function EDPTime_RowClick(sender, eventArgs) {
+                                if (EDPTime_editedRow && EDPTime_hasChanges) {
+                                    EDPTime_hasChanges = false;
+                                    if (confirm("Update changes?")) {
+
+                                        $find("<%= wgdEDPTimeCost.MasterTableView.ClientID %>").updateItem(EDPTime_editedRow);
+                                    }
+                                }
+                            }
+                            function EDPTime_GridCommand(sender, args) {
+                                if (args.get_commandName() != "Edit") {
+                                    EDPTime_editedRow = null;
+                                }
+                            }
+                            function EDPTime_GridCreated(sender, eventArgs) {
+                                var gridElement = sender.get_element();
+                                var elementsToUse = [];
+                                inputs = gridElement.getElementsByTagName("input");
+                                for (var i = 0; i < inputs.length; i++) {
+                                    var lowerType = inputs[i].type.toLowerCase();
+                                    if (lowerType == "hidden" || lowerType == "button") {
+                                        continue;
+                                    }
+
+                                    Array.add(elementsToUse, inputs[i]);
+                                    inputs[i].onchange = EDPTime_TrackChanges;
+                                }
+
+                                //                                EDPTime_dropdowns = gridElement.getElementsByTagName("select");
+                                //                                for (var i = 0; i < EDPTime_dropdowns.length; i++) {
+                                //                                    EDPTime_dropdowns[i].onchange = EDPTime_TrackChanges;
+                                //                                }
+
+                                //setTimeout(function () { if (elementsToUse[0]) elementsToUse[0].focus(); }, 100);
+                            }
+                            function EDPTime_TrackChanges(e) {
+                                EDPTime_hasChanges = true;
+                            }
+                        </script>
+                    </telerik:RadCodeBlock>
+                    <telerik:RadGrid ID="wgdEDPTimeCost" runat="server" Width="96%" GridLines="None"
+                        AutoGenerateColumns="false" AllowSorting="True">
+                        <MasterTableView DataKeyNames="StageId" AllowMultiColumnSorting="True" Width="100%"
+                            ShowFooter="true" EditMode="InPlace">
+                            <%--<EditFormSettings>
+                                <FormTableItemStyle Width="100%" Height="29px"></FormTableItemStyle>
+                                <FormTableStyle GridLines="None" CellSpacing="0" CellPadding="2"></FormTableStyle>
+                                <FormStyle Width="100%" BackColor="#eef2ea"></FormStyle>
+                                <EditColumn ButtonType="ImageButton" />
+                            </EditFormSettings>--%>
+                        </MasterTableView>
+                        <ClientSettings>
+                            <ClientEvents OnRowClick="EDPTime_RowClick" OnRowDblClick="EDPTime_RowDblClick" OnGridCreated="EDPTime_GridCreated"
+                                OnCommand="EDPTime_GridCommand" />
+                        </ClientSettings>
+                    </telerik:RadGrid>
+                </telerik:RadPageView>
+                <telerik:RadPageView ID="RadPageView7" runat="server" Width="100%" Height="100%">
+                    <table style="width: 100%">
+                        <tr style="width: 200px; text-align: right">
+                            <td style="width: 200px; text-align: right">
+                                Select Cost Category:
+                            </td>
+                            <td style="width: 300px; text-align: left">
+                                <asp:DropDownList Width="300px" runat="server" ID="cbQCCostCategory">
+                                </asp:DropDownList>
+                            </td>
+                            <td style="width: 300px">
+                            </td>
+                            <td>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: right">
+                                Unit Price:
+                            </td>
+                            <td style="text-align: left" colspan="3">
+                                <telerik:RadNumericTextBox runat="server" ID="txtQcUnitPrice">
+                                </telerik:RadNumericTextBox>
+                                Quantity:
+                                <telerik:RadNumericTextBox runat="server" ID="txtQcQuantity">
+                                </telerik:RadNumericTextBox>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: right">
+                                Description:
+                            </td>
+                            <td colspan="3" style="text-align: left">
+                                <telerik:RadTextBox ID="txtQCDescription" runat="server">
+                                </telerik:RadTextBox>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="4" style="text-align: center;">
+                                <asp:Button ID="btnAddQCDirectCost" runat="server" Text="Add" Font-Names="Arial"
+                                    Font-Size="9pt" CssClass="btnadd" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width: 100%" colspan="4">
+                                <telerik:RadGrid ID="rdQCDirectCost" runat="server" AutoGenerateColumns="False" AutoGenerateDeleteColumn="True"
+                                    GridLines="None" AllowSorting="True" Width="96%">
+                                    <MasterTableView AllowPaging="True" PageSize="5">
+                                        <%--<RowIndicatorColumn Visible="False">
+                                                <HeaderStyle Width="20px" />
+                                            </RowIndicatorColumn>
+                                            <ExpandCollapseColumn Resizable="False" Visible="False">
+                                                <HeaderStyle Width="20px" />
+                                            </ExpandCollapseColumn>--%>
+                                        <Columns>
+                                            <telerik:GridBoundColumn DataField="Id" HeaderText="Id" UniqueName="Id" Visible="False">
+                                            </telerik:GridBoundColumn>
+                                            <telerik:GridBoundColumn DataField="SubProId" HeaderText="SubProId" UniqueName="SubProId"
+                                                Visible="False">
+                                            </telerik:GridBoundColumn>
+                                            <telerik:GridBoundColumn DataField="CostCategoryId" HeaderText="Cost Category" UniqueName="Samplesize">
+                                            </telerik:GridBoundColumn>
+                                            <telerik:GridBoundColumn DataField="CityId" HeaderText="CityId" UniqueName="City"
+                                                Visible="False">
+                                                <%--<HeaderStyle Font-Bold="False" Font-Italic="False" Font-Overline="False" Font-Strikeout="False"
+                                                        Font-Underline="False" HorizontalAlign="Center" Wrap="True" />--%>
+                                            </telerik:GridBoundColumn>
+                                            <telerik:GridBoundColumn DataField="UnitPrice" HeaderText="Unit Price" UniqueName="UnitPrice">
+                                                <%--HeaderStyle Width="50px" />
+                                                    <ItemStyle Font-Bold="False" Font-Italic="False" Font-Overline="False" Font-Strikeout="False"
+                                                        Font-Underline="False" HorizontalAlign="Right" Wrap="True" />--%>
+                                            </telerik:GridBoundColumn>
+                                            <telerik:GridBoundColumn DataField="Quantity" HeaderText="Quantity" UniqueName="Quantity">
+                                                <%--<HeaderStyle Width="50px" />
+                                                    <ItemStyle Font-Bold="False" Font-Italic="False" Font-Overline="False" Font-Strikeout="False"
+                                                        Font-Underline="False" HorizontalAlign="Right" Wrap="True" />--%>
+                                            </telerik:GridBoundColumn>
+                                            <telerik:GridBoundColumn DataField="TotalCost" HeaderText="Total Cost" UniqueName="TotalCost"
+                                                DataFormatString="{0:N2}">
+                                                <%--<HeaderStyle Width="60px" />
+                                                    <ItemStyle Font-Bold="False" Font-Italic="False" Font-Overline="False" Font-Strikeout="False"
+                                                        Font-Underline="False" HorizontalAlign="Right" Wrap="True" BackColor="Silver" />--%>
+                                            </telerik:GridBoundColumn>
+                                            <telerik:GridBoundColumn DataField="Description" HeaderText="Description" UniqueName="Description">
+                                                <%--<HeaderStyle Font-Bold="False" Font-Italic="False" Font-Overline="False" Font-Strikeout="False"
+                                                        Font-Underline="False" HorizontalAlign="Center" Wrap="True" />--%>
+                                            </telerik:GridBoundColumn>
+                                            <telerik:GridButtonColumn CommandName="Delete" Text="Delete" UniqueName="AutoGeneratedDeleteColumn">
+                                                <%--<HeaderStyle Width="45px" />--%>
+                                            </telerik:GridButtonColumn>
+                                        </Columns>
+                                        <HeaderStyle Font-Bold="False" Font-Italic="False" Font-Overline="False" Font-Strikeout="False"
+                                            Font-Underline="False" HorizontalAlign="Center" Wrap="True" />
+                                        <PagerStyle Font-Bold="False" Font-Italic="False" Font-Overline="False" Font-Strikeout="False"
+                                            Font-Underline="False" HorizontalAlign="Left" Wrap="True" />
+                                    </MasterTableView>
+                                </telerik:RadGrid>
+                            </td>
+                        </tr>
+                    </table>
+                </telerik:RadPageView>
+                <telerik:RadPageView ID="RadPageView8" runat="server" Width="100%" Height="100%">
+                    <telerik:RadCodeBlock ID="RadCodeBlock4" runat="server">
+                        <script type="text/javascript">
+                            var QCTime_hasChanges, QCTime_inputs, QCTime_dropdowns, QCTime_editedRow;
+                            function QCTime_RowDblClick(sender, eventArgs) {
+                                QCTime_editedRow = eventArgs.get_itemIndexHierarchical();
+                                $find("<%= wgdQCTimeCost.MasterTableView.ClientID %>").editItem(QCTime_editedRow);
+                            }
+                            function QCTime_RowClick(sender, eventArgs) {
+                                if (QCTime_editedRow && QCTime_hasChanges) {
+                                    QCTime_hasChanges = false;
+                                    if (confirm("Update changes?")) {
+
+                                        $find("<%= wgdQCTimeCost.MasterTableView.ClientID %>").updateItem(QCTime_editedRow);
+                                    }
+                                }
+                            }
+                            function QCTime_GridCommand(sender, args) {
+                                if (args.get_commandName() != "Edit") {
+                                    QCTime_editedRow = null;
+                                }
+                            }
+                            function QCTime_GridCreated(sender, eventArgs) {
+                                var gridElement = sender.get_element();
+                                var elementsToUse = [];
+                                inputs = gridElement.getElementsByTagName("input");
+                                for (var i = 0; i < inputs.length; i++) {
+                                    var lowerType = inputs[i].type.toLowerCase();
+                                    if (lowerType == "hidden" || lowerType == "button") {
+                                        continue;
+                                    }
+
+                                    Array.add(elementsToUse, inputs[i]);
+                                    inputs[i].onchange = QCTime_TrackChanges;
+                                }
+
+                                //                                QCTime_dropdowns = gridElement.getElementsByTagName("select");
+                                //                                for (var i = 0; i < QCTime_dropdowns.length; i++) {
+                                //                                    QCTime_dropdowns[i].onchange = QCTime_TrackChanges;
+                                //                                }
+
+                                //setTimeout(function () { if (elementsToUse[0]) elementsToUse[0].focus(); }, 100);
+                            }
+                            function QCTime_TrackChanges(e) {
+                                QCTime_hasChanges = true;
+                            }
+                        </script>
+                    </telerik:RadCodeBlock>
+                    <telerik:RadGrid ID="wgdQCTimeCost" runat="server" Width="96%" GridLines="None" AutoGenerateColumns="false"
+                        AllowSorting="True">
+                        <MasterTableView DataKeyNames="StageId" ShowFooter="true" Width="100%" CommandItemDisplay="None"
+                            EditMode="InPlace">
+                        </MasterTableView>
+                        <ClientSettings>
+                            <ClientEvents OnRowClick="QCTime_RowClick" OnRowDblClick="QCTime_RowDblClick" OnGridCreated="QCTime_GridCreated"
+                                OnCommand="QCTime_GridCommand" />
+                        </ClientSettings>
+                    </telerik:RadGrid>
+                </telerik:RadPageView>
+                <telerik:RadPageView ID="RadPageView9" runat="server" Width="100%" Height="100%">
+                    <table style="width: 100%">
+                        <tr style="width: 200px; text-align: right">
+                            <td style="width: 200px; text-align: right">
+                                Select Cost Category:
+                            </td>
+                            <td style="width: 300px; text-align: left">
+                                <asp:DropDownList Width="300px" runat="server" ID="cbCMRCostCategory">
+                                </asp:DropDownList>
+                            </td>
+                            <td style="width: 300px">
+                            </td>
+                            <td>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: right">
+                                Unit Price:
+                            </td>
+                            <td style="text-align: left" colspan="3">
+                                <telerik:RadNumericTextBox runat="server" ID="txtCMRUnitPrice">
+                                </telerik:RadNumericTextBox>
+                                Quantity:
+                                <telerik:RadNumericTextBox runat="server" ID="txtCMRQuantity">
+                                </telerik:RadNumericTextBox>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: right">
+                                Description:
+                            </td>
+                            <td colspan="3" style="text-align: left">
+                                <telerik:RadTextBox ID="txtCMRDescription" runat="server">
+                                </telerik:RadTextBox>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="4" style="text-align: center;">
+                                <asp:Button ID="btnAddCMRDirectCost" runat="server" Text="Add" Font-Names="Arial"
+                                    Font-Size="9pt" CssClass="btnadd" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width: 100%" colspan="4">
+                                <telerik:RadGrid ID="rdCMRDirectCost" runat="server" AutoGenerateColumns="False"
+                                    AutoGenerateDeleteColumn="True" GridLines="None" AllowSorting="True" Width="96%">
+                                    <MasterTableView AllowPaging="True" PageSize="5">
+                                        <%--RowIndicatorColumn Visible="False">
+                                                <HeaderStyle Width="20px" />
+                                            </RowIndicatorColumn>
+                                            <ExpandCollapseColumn Resizable="False" Visible="False">
+                                                <HeaderStyle Width="20px" />
+                                            </ExpandCollapseColumn>--%>
+                                        <Columns>
+                                            <telerik:GridBoundColumn DataField="Id" HeaderText="Id" UniqueName="Id" Visible="False">
+                                            </telerik:GridBoundColumn>
+                                            <telerik:GridBoundColumn DataField="SubProId" HeaderText="SubProId" UniqueName="SubProId"
+                                                Visible="False">
+                                            </telerik:GridBoundColumn>
+                                            <telerik:GridBoundColumn DataField="CostCategoryId" HeaderText="Cost Category" UniqueName="Samplesize">
+                                                <%--<HeaderStyle Font-Bold="False" Font-Italic="False" Font-Overline="False" Font-Strikeout="False"
+                                                        Font-Underline="False" HorizontalAlign="Center" Width="200px" Wrap="True" />
+                                                    <ItemStyle HorizontalAlign="Left" />--%>
+                                            </telerik:GridBoundColumn>
+                                            <telerik:GridBoundColumn DataField="CityId" HeaderText="CityId" UniqueName="City"
+                                                Visible="False">
+                                                <%--<HeaderStyle Font-Bold="False" Font-Italic="False" Font-Overline="False" Font-Strikeout="False"
+                                                        Font-Underline="False" HorizontalAlign="Center" Width="100px" Wrap="True" />--%>
+                                            </telerik:GridBoundColumn>
+                                            <telerik:GridBoundColumn DataField="UnitPrice" HeaderText="Unit Price" UniqueName="UnitPrice">
+                                                <%--<HeaderStyle Width="50px" />
+                                                    <ItemStyle Font-Bold="False" Font-Italic="False" Font-Overline="False" Font-Strikeout="False"
+                                                        Font-Underline="False" HorizontalAlign="Right" Wrap="True" />--%>
+                                            </telerik:GridBoundColumn>
+                                            <telerik:GridBoundColumn DataField="Quantity" HeaderText="Quantity" UniqueName="Quantity">
+                                                <%--<HeaderStyle Width="50px" />
+                                                    <ItemStyle Font-Bold="False" Font-Italic="False" Font-Overline="False" Font-Strikeout="False"
+                                                        Font-Underline="False" HorizontalAlign="Right" Wrap="True" />--%>
+                                            </telerik:GridBoundColumn>
+                                            <telerik:GridBoundColumn DataField="TotalCost" HeaderText="Total Cost" UniqueName="TotalCost"
+                                                DataFormatString="{0:N2}">
+                                                <%--<HeaderStyle Width="60px" />
+                                                    <ItemStyle Font-Bold="False" Font-Italic="False" Font-Overline="False" Font-Strikeout="False"
+                                                        Font-Underline="False" HorizontalAlign="Right" Wrap="True" BackColor="Silver" />--%>
+                                            </telerik:GridBoundColumn>
+                                            <telerik:GridBoundColumn DataField="Description" HeaderText="Description" UniqueName="Description">
+                                                <%--<HeaderStyle Font-Bold="False" Font-Italic="False" Font-Overline="False" Font-Strikeout="False"
+                                                        Font-Underline="False" HorizontalAlign="Center" Wrap="True" />--%>
+                                            </telerik:GridBoundColumn>
+                                            <telerik:GridButtonColumn CommandName="Delete" Text="Delete" UniqueName="AutoGeneratedDeleteColumn">
+                                                <%--<HeaderStyle Width="45px" />--%>
+                                            </telerik:GridButtonColumn>
+                                        </Columns>
+                                        <HeaderStyle Font-Bold="False" Font-Italic="False" Font-Overline="False" Font-Strikeout="False"
+                                            Font-Underline="False" HorizontalAlign="Center" Wrap="True" />
+                                        <PagerStyle Font-Bold="False" Font-Italic="False" Font-Overline="False" Font-Strikeout="False"
+                                            Font-Underline="False" HorizontalAlign="Left" Wrap="True" />
+                                    </MasterTableView>
+                                </telerik:RadGrid>
+                            </td>
+                        </tr>
+                    </table>
+                </telerik:RadPageView>
+                <telerik:RadPageView ID="RadPageView10" runat="server" Width="100%" Height="100%">
+                    <telerik:RadCodeBlock ID="RadCodeBlock5" runat="server">
+                        <script type="text/javascript">
+                            var CMRTime_hasChanges, CMRTime_inputs, CMRTime_dropdowns, CMRTime_editedRow;
+                            function CMRTime_RowDblClick(sender, eventArgs) {
+
+                                //sender.get_masterTableView().editItem(eventArgs.get_itemIndexHierarchical());
+                                CMRTime_editedRow = eventArgs.get_itemIndexHierarchical();
+                                $find("<%= wgdCMRTimeCost.MasterTableView.ClientID %>").editItem(CMRTime_editedRow);
+                            }
+                            function CMRTime_RowClick(sender, eventArgs) {
+                                if (CMRTime_editedRow && CMRTime_hasChanges) {
+                                    CMRTime_hasChanges = false;
+                                    if (confirm("Update changes?")) {
+
+                                        $find("<%= wgdCMRTimeCost.MasterTableView.ClientID %>").updateItem(CMRTime_editedRow);
+                                    }
+                                }
+                            }
+                            function CMRTime_GridCommand(sender, args) {
+                                if (args.get_commandName() != "Edit") {
+                                    CMRTime_editedRow = null;
+                                }
+                            }
+                            function CMRTime_GridCreated(sender, eventArgs) {
+                                var gridElement = sender.get_element();
+                                var elementsToUse = [];
+                                inputs = gridElement.getElementsByTagName("input");
+                                for (var i = 0; i < inputs.length; i++) {
+                                    var lowerType = inputs[i].type.toLowerCase();
+                                    if (lowerType == "hidden" || lowerType == "button") {
+                                        continue;
+                                    }
+
+                                    Array.add(elementsToUse, inputs[i]);
+                                    inputs[i].onchange = CMRTime_TrackChanges;
+                                }
+
+                                //                                CMRTime_dropdowns = gridElement.getElementsByTagName("select");
+                                //                                for (var i = 0; i < CMRTime_dropdowns.length; i++) {
+                                //                                    CMRTime_dropdowns[i].onchange = CMRTime_TrackChanges;
+                                //                                }
+
+                                //setTimeout(function () { if (elementsToUse[0]) elementsToUse[0].focus(); }, 100);
+                            }
+                            function CMRTime_TrackChanges(e) {
+                                CMRTime_hasChanges = true;
+                            }
+                        </script>
+                    </telerik:RadCodeBlock>
+                    <telerik:RadGrid ID="wgdCMRTimeCost" runat="server" Width="96%" GridLines="None"
+                        AutoGenerateColumns="false" AllowSorting="True">
+                        <MasterTableView DataKeyNames="StageId" ShowFooter="true" AllowMultiColumnSorting="True"
+                            Width="100%" CommandItemDisplay="None" EditMode="InPlace">
+                        </MasterTableView>
+                        <ClientSettings>
+                            <ClientEvents OnRowClick="CMRTime_RowClick" OnRowDblClick="CMRTime_RowDblClick" OnGridCreated="CMRTime_GridCreated"
+                                OnCommand="CMRTime_GridCommand" />
+                        </ClientSettings>
+                    </telerik:RadGrid>
+                </telerik:RadPageView>
+            </telerik:RadMultiPage>
+        </div>
+    </div>
+    </form>
+</body>
+</html>

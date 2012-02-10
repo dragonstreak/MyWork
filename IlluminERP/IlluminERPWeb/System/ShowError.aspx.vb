@@ -1,0 +1,5 @@
+﻿
+Partial Class ShowError
+    Inherits System.Web.UI.Page
+
+End Class

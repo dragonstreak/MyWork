@@ -1,0 +1,5 @@
+<PUBLIC:COMPONENT>
+<PUBLIC:ATTACH EVENT="onmouseover" ONEVENT="DoMouseOver()" />
+<PUBLIC:ATTACH EVENT="onmouseout" ONEVENT="DoMouseOut()" />
+<script src="../css/htc.js"></script>
+</PUBLIC:COMPONENT>

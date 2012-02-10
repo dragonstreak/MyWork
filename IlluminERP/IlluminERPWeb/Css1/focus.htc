@@ -1,0 +1,5 @@
+<PUBLIC:COMPONENT>
+<PUBLIC:ATTACH EVENT="onfocus" ONEVENT="DoOnFocus()" />
+<PUBLIC:ATTACH EVENT="onblur" ONEVENT="DoOnBlur()" />
+<script src="../css/htc.js"></script>
+</PUBLIC:COMPONENT>

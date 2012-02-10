@@ -1,0 +1,6 @@
+
+<script language="JavaScript">
+<!--
+	innerHTML = "<table class='page'><tr><td>第 1 页 / 共 1 页</td><td align='right'>到 <input type='text' size='2'> 页 <img src='../images/go.gif' width='25' height='15' border='0'> <img src='../images/page_previous.gif' width='7' height='12' border='0' align='absmiddle'> 上一页 | 下一页 <img src='../images/page_next.gif' width='7' height='12' border='0' align='absmiddle'></td></tr></table>";
+//-->
+</script>

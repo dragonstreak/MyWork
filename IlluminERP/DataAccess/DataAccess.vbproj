@@ -66,9 +66,8 @@
       <EmbedInteropTypes>True</EmbedInteropTypes>
       <HintPath>..\ThirdPart\Interop.jmail.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.ApplicationBlocks.Data, Version=2.0.0.0, Culture=neutral">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\IlluminERPWeb\Bin\Microsoft.ApplicationBlocks.Data.dll</HintPath>
+    <Reference Include="Microsoft.ApplicationBlocks.Data">
+      <HintPath>..\ThirdPart\Microsoft.ApplicationBlocks.Data.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Practices.Unity, Version=2.0.414.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -495,9 +494,7 @@
       <Name>Utils</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="bin\Debug\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildBinPath)\Microsoft.VisualBasic.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
