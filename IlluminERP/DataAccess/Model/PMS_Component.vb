@@ -296,6 +296,7 @@ Namespace Model
         Private _ComponentCostingFile As PMS_ComponentCostingFile
         ''' <summary>
         ''' This is the consting file of component
+        ''' it's the estimate file
         ''' </summary>
         ''' <value></value>
         ''' <returns></returns>
@@ -307,6 +308,36 @@ Namespace Model
             Set(ByVal value As PMS_ComponentCostingFile)
                 _ComponentCostingFile = value
             End Set
+        End Property
+        ''' <summary>
+        ''' This property is only for showing
+        ''' it's the show name for estimate costing file.
+        ''' </summary>
+        ''' <value></value>
+        ''' <returns></returns>
+        ''' <remarks></remarks>
+        Public ReadOnly Property EstimateCostingFile
+            Get
+                If ComponentCostingFile Is Nothing Then
+                    Return ""
+                End If
+                Return ComponentCostingFile.ShowName
+            End Get
+        End Property
+        ''' <summary>
+        ''' This property is only for showing
+        ''' it's the show name for actual costing file.
+        ''' </summary>
+        ''' <value></value>
+        ''' <returns></returns>
+        ''' <remarks></remarks>
+        Public ReadOnly Property ActualCostingFile
+            Get
+                If ComponentCostingFile Is Nothing Then
+                    Return ""
+                End If
+                Return ComponentCostingFile.ShowName_Actual
+            End Get
         End Property
     End Class
 End Namespace

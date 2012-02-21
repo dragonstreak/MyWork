@@ -7,6 +7,8 @@ Imports DataAccess
 Imports System.Collections
 Imports System.Collections.Generic
 Imports Telerik.Web.UI
+Imports DataAccess.Model.Enum
+
 Partial Class PMS_ProposalStatus
     Inherits System.Web.UI.Page
     Private ProjectTypeBLL As New BLL.Base_ProjectTypeBLL
@@ -34,8 +36,6 @@ Partial Class PMS_ProposalStatus
     Dim userinfo As New Model.User_UserInfo
 
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
-
-
 
         If Not Page.IsPostBack Then
             Dim strProId As String
@@ -163,6 +163,9 @@ Partial Class PMS_ProposalStatus
             Me.txtStatusNote.Text = info.StatusNote
             If info.Status > 1 Then
                 Me.lblStatus.Text = Me.cbProposalStatus.SelectedItem.Text & "  on " & info.StatusDate
+                If info.Status = ProjectStatus.Confirmed Then
+                    btnOk.Enabled = False
+                End If
             End If
             Dim ds As DataSet = Me.ProposalUserinfoBll.GetProposalUserinfoByProId(StrId)
 
@@ -201,6 +204,27 @@ Partial Class PMS_ProposalStatus
         info.Id = Request.QueryString("proid")
 
         If ProposalInfoBLL.UpdateProjectStatus(info) = True Then
+            'Init Project
+            Dim jobNumber As String = Me.txtJobnumber.Text
+            If ProjectStatus.Confirmed = cbProposalStatus.SelectedValue _
+                AndAlso Not String.IsNullOrEmpty(jobNumber) Then
+                Dim projectTimeBLL As New PMS_ProjectTimingBLL
+                Dim pt = projectTimeBLL.GetTimingListByJobNumber(jobNumber)
+                If pt Is Nothing _
+                   OrElse pt.Count < 1 Then
+                    ' if haven't create project time record for this proposal, then create it
+                    projectTimeBLL.CreateProjectTimingByProposal(jobNumber)
+                End If
+
+                Dim projectQuotationBLL As New PMS_ProjectQuotationBLL
+                Dim pq = projectQuotationBLL.GetQuotationListByJobNumber(jobNumber)
+                If pq Is Nothing _
+                    OrElse pq.Count < 1 Then
+                    ' if haven't create project quotation record for this proposal, then create it
+                    projectQuotationBLL.CreateProjectQuotationByProposal(jobNumber)
+                End If
+                btnOk.Enabled = False
+            End If
             Me.RadAjaxManager1.Alert("Update Success!")
             Dim StatusInfo As Model.Base_ProjectStatus = ProjectStatusBLL.GetProjectStatusInfoById(Me.cbProposalStatus.SelectedValue)
             lblStatus.Text = StatusInfo.ProjctStatus & "   On  " & Now.Date

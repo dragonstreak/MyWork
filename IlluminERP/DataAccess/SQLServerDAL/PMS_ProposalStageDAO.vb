@@ -186,5 +186,32 @@ Namespace SQLServerDAL
                 End If
             End Try
         End Function
+        ''' <summary>
+        ''' This method is used to get stage-component-methodology
+        ''' </summary>
+        ''' <param name="jobNumber"></param>
+        ''' <returns></returns>
+        ''' <remarks></remarks>
+        Public Overridable Function GetStageComponentMethodologyList(ByVal jobNumber As String) As DataSet Implements IPMS_ProposalStage.GetStageComponentMethodologyList
+            Dim param As New SqlParameter("@JobNumber", jobNumber)
+            Dim sql As String = "select t_PMS_ProposalStage.StageName,t_PMS_ProposalStage.StageNumber,t_PMS_Component.ComponentName,t_Base_Methodology.Methodology as methodology_type,t_Base_Methodology_Type.MethodologyType from dbo.t_PMS_Component "
+            sql += " left join dbo.t_PMS_ProposalStage on  t_PMS_Component.StageId = t_PMS_ProposalStage.Id"
+            sql += " left join dbo.t_Base_Methodology on t_Base_Methodology.Id = t_PMS_Component.MethdologyType"
+            sql += " left join dbo.t_Base_Methodology_Type on t_Base_Methodology_Type.id = t_PMS_Component.Methodology"
+            sql += " where t_PMS_Component.Jobnumber=@JobNumber"
+            Dim ds As DataSet = Me.ExecuteDataSet(CommandType.Text, sql, param)
+            Return ds
+        End Function
+
+        Public Overridable Function GetStageComponentCostingFileList(ByVal jobNumber As String) As DataSet Implements IPMS_ProposalStage.GetStageComponentCostingFileList
+            Dim param As New SqlParameter("@JobNumber", jobNumber)
+            Dim sql As String = "select t_PMS_Component.Jobnumber,t_PMS_Component.id as componentId,t_PMS_Component.ComponentName,t_PMS_ProposalStage.StageName,t_PMS_ProposalStage.StageNumber,t_PMS_ComponentCostingFile.ShowName,t_PMS_ComponentCostingFile.SaveName,t_PMS_ComponentCostingFile.ShowName_Actual,t_PMS_ComponentCostingFile.SaveName_Actual,t_PMS_ComponentCostingFile.Id as CostingFileId "
+            sql += " from t_PMS_Component "
+            sql += " left join dbo.t_PMS_ProposalStage on  t_PMS_Component.StageId = t_PMS_ProposalStage.Id "
+            sql += " left join dbo.t_PMS_ComponentCostingFile on t_PMS_Component.id = t_PMS_ComponentCostingFile.ComponentId "
+            sql += " where t_PMS_Component.Jobnumber=@JobNumber order by t_PMS_ProposalStage.StageName,t_PMS_Component.ComponentName"
+            Dim ds As DataSet = Me.ExecuteDataSet(CommandType.Text, sql, param)
+            Return ds
+        End Function
     End Class
 End Namespace

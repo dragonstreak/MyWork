@@ -81,6 +81,10 @@ Partial Class PMS_Project
                 Me.btnDesign.OnClientClick = "openStageWin(" + info.JobNumber.ToString + ");return false;"
                 Me.btnQuotation.OnClientClick = "openQuotationWin(" + info.JobNumber.ToString + ");return false;"
                 Me.btnSchedule.OnClientClick = "openScheduleWin(" + info.JobNumber.ToString + ");return false;"
+                Me.btnUploadCost.OnClientClick = "openStageComponentCostingFileWin(" + info.JobNumber.ToString + ");return false;"
+                Me.btnEstimateCost.OnClientClick = "openEstimateCostWin(" + info.JobNumber.ToString + ");return false;"
+                Me.btnActualCost.OnClientClick = "openActualCostWin(" + info.JobNumber.ToString + ");return false;"
+                Me.btnCostAnalysis.OnClientClick = "openCostAnalysisWin(" + info.JobNumber.ToString + ");return false;"
                 Me.btnTeamAssignment.OnClientClick = "openTeamWin(" + info.Id.ToString + ");return false;"
                 Me.btnStatus.OnClientClick = "openUpdateStatusWin(" + info.Id.ToString + ");return false;"
 

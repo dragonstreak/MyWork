@@ -229,7 +229,6 @@ Partial Class PMS_ProposalTiming
 
                     End If
 
-
                 Next
             Next
         Next

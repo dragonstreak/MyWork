@@ -63,7 +63,7 @@
                                 <img src="../Images/png/delete_blue.png" alt="" />
                                 Close
                             </button>
-                            <asp:Button ID="btnInitProjectTiming" runat="server" Text="InitProjectTiming" />
+                            
                         </span>
 
                           <span style="float: right; padding-right: 10px; padding-top :20px;">

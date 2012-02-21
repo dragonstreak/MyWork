@@ -1,7 +1,28 @@
 ﻿Imports Microsoft.VisualBasic
 Imports Aspose.Cells
+Imports DataAccess.Model
+Imports DataAccess.BLL
+Imports DataAccess
+
 Public Class CostingFileMaster
     Private costSheetIndex As Integer = 4
+    Dim operationCostBLL As New PMS_OperationCostBLL
+    Dim costNameArr As New List(Of String)
+    Private estimateTemplateIndex As Integer = 2
+    Private actualTemplateIndex As Integer = 3
+    Private erpCostAnalysisTemplateIndex As Integer = 4
+
+    Public Sub New()
+        ''Init the cost name list
+        costNameArr.Add("SH-FW")
+        costNameArr.Add("SH-QC")
+        costNameArr.Add("SH-DP")
+        costNameArr.Add("SH-Management")
+        costNameArr.Add("Subcontract-FW")
+        costNameArr.Add("Subcontract-QC")
+        costNameArr.Add("Subcontract-DP")
+    End Sub
+
     ''' <summary>
     ''' This method is used to process costing file.
     ''' calculate the costing analysis.
@@ -40,7 +61,6 @@ Public Class CostingFileMaster
                 workbook.Worksheets(templateSheetName).Move(costSheetIndex)
             End If
             ProcessFormularForCostingAnalysisSheet(workbook)
-
             workbook.Save(fileName)
         Catch ex As Exception
             Throw ex
@@ -52,7 +72,11 @@ Public Class CostingFileMaster
         If cell.Value Is Nothing Then
             Return defaultValue
         End If
-        Return CType(cell.Value, T)
+        Try
+            Return CType(cell.Value, T)
+        Catch ex As Exception
+            Return defaultValue
+        End Try
     End Function
     ''' <summary>
     ''' Calc costing analysis.
@@ -127,17 +151,6 @@ Public Class CostingFileMaster
         alayisisCells(7, 1).Style.Font.Color = Drawing.Color.Red
         alayisisCells(8, 1).Style.Font.Color = Drawing.Color.Red
         alayisisCells(9, 1).Style.Font.Color = Drawing.Color.Red
-        'alayisisCells(14, 1).Style.Font.Color = Drawing.Color.Red
-
-        'alayisisCells(16, 1).Style.Font.Color = Drawing.Color.Red
-        'alayisisCells(19, 1).Style.Font.Color = Drawing.Color.Red
-        'alayisisCells(20, 1).Style.Font.Color = Drawing.Color.Red
-        'alayisisCells(15, 1).Style.Font.Color = Drawing.Color.Red
-
-        'alayisisCells(23, 1).Style.Font.Color = Drawing.Color.Red
-        'alayisisCells(26, 1).Style.Font.Color = Drawing.Color.Red
-
-        'alayisisCells(30, 1).Style.Font.Color = Drawing.Color.Red
 
     End Sub
     ''' <summary>
@@ -209,4 +222,198 @@ Public Class CostingFileMaster
         costingAnalysisSheet.Cells("B31").Formula = "=B14-SUM(B15,B16,B24,B27,B30)"
         costingAnalysisSheet.Cells("B32").Formula = "=B31/B14"
     End Sub
+    ''' <summary>
+    ''' This method is used to process estimated or actual costing file
+    ''' </summary>
+    ''' <param name="fileName">File name.</param>
+    ''' <param name="templateFileName"></param>
+    ''' <param name="costList"></param>
+    ''' <param name="costType">Actual,Estimate</param>
+    ''' <param name="estimateFilePath"></param>
+    ''' <remarks></remarks>
+    Public Sub ProcessEstimatedOrActualCostingFile(ByVal fileName As String, ByVal templateFileName As String, ByVal costList As Dictionary(Of String, PMS_OperationCost), ByVal costType As String, ByVal estimateFilePath As String)
+        Try
+            Dim workbook As Workbook = New Workbook()
+            workbook.Open(fileName)
+            Dim workbookTemplate As Workbook = New Workbook()
+            'need use template and add the template file path to web.config.
+            workbookTemplate.Open(templateFileName)
+            'Get data from excel, the excel will only has one sheet
+            Dim currentUsingCostingSheet As Worksheet = workbook.Worksheets(0)
+            workbook.Worksheets.Add()
+            Dim costSheetIndex As Integer = 1
+            Dim analysisSheetIndex As Integer = 3
+            'Dim costSheetIndexTemplate As Integer = 2
+            'index = 2 is used for estimate template sheet 
+            'index = 3 is used for actual template sheet
+            Dim templateCostSheet As Worksheet
+            Dim templateErpCostingAnalysisSheet As Worksheet
+            If costType = "Estimate" Then
+                templateCostSheet = workbookTemplate.Worksheets(estimateTemplateIndex)
+            Else
+
+                ' actual sheet, need create the erp cost analysis sheet
+                templateCostSheet = workbookTemplate.Worksheets(actualTemplateIndex)
+                templateErpCostingAnalysisSheet = workbookTemplate.Worksheets(erpCostAnalysisTemplateIndex)
+
+            End If
+            workbook.Worksheets(costSheetIndex).Copy(templateCostSheet)
+            workbook.Worksheets(costSheetIndex).Name = templateCostSheet.Name
+            If costType = "Actual" Then
+                If Not String.IsNullOrEmpty(estimateFilePath) Then
+                    Dim estimateWorkBook As Workbook = New Workbook()
+                    estimateWorkBook.Open(estimateFilePath)
+                    workbook.Worksheets.Add()
+                    workbook.Worksheets(2).Copy(estimateWorkBook.Worksheets(1))
+                    workbook.Worksheets(2).Name = estimateWorkBook.Worksheets(1).Name
+                End If
+                workbook.Worksheets.Add()
+                workbook.Worksheets(analysisSheetIndex).Copy(templateErpCostingAnalysisSheet)
+                workbook.Worksheets(analysisSheetIndex).Name = templateErpCostingAnalysisSheet.Name
+            End If
+            workbook.CalculateFormula()
+
+
+            'Deal With every cost object
+            For Each costNameStr As String In costNameArr
+                SetValueFromSheet(workbook, currentUsingCostingSheet, workbook.Worksheets(templateCostSheet.Name), costList(costNameStr))
+                If costType = "Actual" Then
+                    'SetValueFromSheet(workbook, currentUsingCostingSheet, workbook.Worksheets(templateCostSheet.Name), costList(costNameStr))
+                    'set value for diff in erp costing analysis sheet
+                    costList(costNameStr).CostDiff = GetCellValue(Of Decimal)(workbook.Worksheets(templateErpCostingAnalysisSheet.Name).Cells(costList(costNameStr).PropertyCellDictionary(costList(costNameStr).CostName + "_Diff")), Nothing)
+                    'costList(costNameStr).CostDiff = workbook.Worksheets(templateErpCostingAnalysisSheet.Name).Cells(costList(costNameStr).PropertyCellDictionary(costList(costNameStr).CostName + "_Diff")).Value
+                End If
+            Next
+            
+            'clear formula
+            If costType = "Estimate" Then
+                For Each costNameStr As String In costNameArr
+                    ClearEstimatFormula(workbook, currentUsingCostingSheet, workbook.Worksheets(templateCostSheet.Name), costList(costNameStr))
+                Next
+            End If
+
+
+            workbook.Save(fileName)
+            'Save every cost object
+            operationCostBLL.SaveEntityDictionary(costList)
+
+        Catch ex As Exception
+
+        End Try
+    End Sub
+
+    ''' <summary>
+    ''' Set vlaue from sheet to cost object
+    ''' </summary>
+    ''' <param name="workbook"></param>
+    ''' <param name="currentUsingCostingSheet"></param>
+    ''' <param name="CurrentCostingSheet"></param>
+    ''' <param name="pMS_OperationCost"></param>
+    ''' <remarks></remarks>
+    Private Sub SetValueFromSheet(ByVal workbook As Workbook, ByVal currentUsingCostingSheet As Worksheet, ByVal CurrentCostingSheet As Worksheet, ByVal pMS_OperationCost As PMS_OperationCost)
+        pMS_OperationCost.SampleSize = GetCellValue(Of Decimal)(CurrentCostingSheet.Cells(pMS_OperationCost.PropertyCellDictionary(pMS_OperationCost.CostName + "_SampleSize")), Nothing)
+        pMS_OperationCost.TotalCost = GetCellValue(Of Decimal)(CurrentCostingSheet.Cells(pMS_OperationCost.PropertyCellDictionary(pMS_OperationCost.CostName + "_TotalCost")), Nothing)
+        pMS_OperationCost.AverageCostPerSample = GetCellValue(Of Decimal)(CurrentCostingSheet.Cells(pMS_OperationCost.PropertyCellDictionary(pMS_OperationCost.CostName + "_AverageCostPerSample")), Nothing)
+    End Sub
+    ''' <summary>
+    ''' First step: save value to temp object
+    ''' Second step:remove formula
+    ''' Third step: put the value to excel cell from temp object.
+    ''' </summary>
+    ''' <param name="workbook"></param>
+    ''' <param name="currentUsingCostingSheet"></param>
+    ''' <param name="CurrentCostingSheet"></param>
+    ''' <param name="pMS_OperationCost"></param>
+    ''' <remarks></remarks>
+    Private Sub ClearEstimatFormula(ByVal workbook As Workbook, ByVal currentUsingCostingSheet As Worksheet, ByVal CurrentCostingSheet As Worksheet, ByVal pMS_OperationCost As PMS_OperationCost)
+        Dim originObject As Object
+        originObject = CurrentCostingSheet.Cells(pMS_OperationCost.PropertyCellDictionary(pMS_OperationCost.CostName + "_SampleSize")).Value
+        CurrentCostingSheet.Cells(pMS_OperationCost.PropertyCellDictionary(pMS_OperationCost.CostName + "_SampleSize")).Formula = ""
+        CurrentCostingSheet.Cells(pMS_OperationCost.PropertyCellDictionary(pMS_OperationCost.CostName + "_SampleSize")).PutValue(originObject)
+        originObject = CurrentCostingSheet.Cells(pMS_OperationCost.PropertyCellDictionary(pMS_OperationCost.CostName + "_TotalCost")).Value
+        CurrentCostingSheet.Cells(pMS_OperationCost.PropertyCellDictionary(pMS_OperationCost.CostName + "_TotalCost")).Formula = ""
+        CurrentCostingSheet.Cells(pMS_OperationCost.PropertyCellDictionary(pMS_OperationCost.CostName + "_TotalCost")).PutValue(originObject)
+        originObject = CurrentCostingSheet.Cells(pMS_OperationCost.PropertyCellDictionary(pMS_OperationCost.CostName + "_AverageCostPerSample")).Value
+        CurrentCostingSheet.Cells(pMS_OperationCost.PropertyCellDictionary(pMS_OperationCost.CostName + "_AverageCostPerSample")).Formula = ""
+        CurrentCostingSheet.Cells(pMS_OperationCost.PropertyCellDictionary(pMS_OperationCost.CostName + "_AverageCostPerSample")).PutValue(originObject)
+    End Sub
+    ''' <summary>
+    ''' This method is used to init the component operation Cost
+    ''' </summary>
+    ''' <param name="operationCostDictionary"></param>
+    ''' <param name="componentId"></param>
+    ''' <param name="costType"></param>
+    ''' <remarks></remarks>
+    Public Sub InitComponentOperationCostDictionary(ByVal operationCostDictionary As Dictionary(Of String, PMS_OperationCost), ByVal componentId As Integer, ByVal costType As String, ByVal fileId As Integer)
+        Dim costList As List(Of PMS_OperationCost) = operationCostBLL.GetComponentCostList(costType, componentId)
+
+        If costList.Count > 0 Then
+            For Each cost As PMS_OperationCost In costList
+                operationCostDictionary.Add(cost.CostName, cost)
+            Next
+        Else
+            'need init the operation
+            For Each costNameStr As String In costNameArr
+                Dim cost As New PMS_OperationCost
+                cost.Id = -1
+                cost.CostName = costNameStr
+                operationCostDictionary.Add(costNameStr, cost)
+                cost.ComponentId = componentId
+                cost.CostingFileId = fileId
+                cost.CostType = costType
+            Next
+        End If
+
+        For Each costPair As KeyValuePair(Of String, PMS_OperationCost) In operationCostDictionary
+            SetCellNameForCost(costPair.Value)
+        Next
+    End Sub
+
+    ''' <summary>
+    ''' This method is used to set the relationship between property and cell name
+    ''' </summary>
+    ''' <param name="operationCost"></param>
+    ''' <remarks></remarks>
+    Private Sub SetCellNameForCost(ByVal operationCost As PMS_OperationCost)
+        operationCost.PropertyCellDictionary.Clear()
+        If operationCost.CostName = "SH-FW" Then
+            operationCost.PropertyCellDictionary.Add("SH-FW_SampleSize", "B5")
+            operationCost.PropertyCellDictionary.Add("SH-FW_TotalCost", "C5")
+            operationCost.PropertyCellDictionary.Add("SH-FW_AverageCostPerSample", "D5")
+            operationCost.PropertyCellDictionary.Add("SH-FW_Diff", "D4")
+        ElseIf operationCost.CostName = "SH-QC" Then
+            operationCost.PropertyCellDictionary.Add("SH-QC_SampleSize", "B6")
+            operationCost.PropertyCellDictionary.Add("SH-QC_TotalCost", "C6")
+            operationCost.PropertyCellDictionary.Add("SH-QC_AverageCostPerSample", "D6")
+            operationCost.PropertyCellDictionary.Add("SH-QC_Diff", "D5")
+        ElseIf operationCost.CostName = "SH-DP" Then
+            operationCost.PropertyCellDictionary.Add("SH-DP_SampleSize", "B7")
+            operationCost.PropertyCellDictionary.Add("SH-DP_TotalCost", "C7")
+            operationCost.PropertyCellDictionary.Add("SH-DP_AverageCostPerSample", "D7")
+            operationCost.PropertyCellDictionary.Add("SH-DP_Diff", "D6")
+        ElseIf operationCost.CostName = "SH-Management" Then
+            operationCost.PropertyCellDictionary.Add("SH-Management_SampleSize", "B8")
+            operationCost.PropertyCellDictionary.Add("SH-Management_TotalCost", "C8")
+            operationCost.PropertyCellDictionary.Add("SH-Management_AverageCostPerSample", "D8")
+            operationCost.PropertyCellDictionary.Add("SH-Management_Diff", "D7")
+        ElseIf operationCost.CostName = "Subcontract-FW" Then
+            operationCost.PropertyCellDictionary.Add("Subcontract-FW_SampleSize", "B9")
+            operationCost.PropertyCellDictionary.Add("Subcontract-FW_TotalCost", "C9")
+            operationCost.PropertyCellDictionary.Add("Subcontract-FW_AverageCostPerSample", "D9")
+            operationCost.PropertyCellDictionary.Add("Subcontract-FW_Diff", "D8")
+        ElseIf operationCost.CostName = "Subcontract-QC" Then
+            operationCost.PropertyCellDictionary.Add("Subcontract-QC_SampleSize", "B10")
+            operationCost.PropertyCellDictionary.Add("Subcontract-QC_TotalCost", "C10")
+            operationCost.PropertyCellDictionary.Add("Subcontract-QC_AverageCostPerSample", "D10")
+            operationCost.PropertyCellDictionary.Add("Subcontract-QC_Diff", "D9")
+        ElseIf operationCost.CostName = "Subcontract-DP" Then
+            operationCost.PropertyCellDictionary.Add("Subcontract-DP_SampleSize", "B11")
+            operationCost.PropertyCellDictionary.Add("Subcontract-DP_TotalCost", "C11")
+            operationCost.PropertyCellDictionary.Add("Subcontract-DP_AverageCostPerSample", "D11")
+            operationCost.PropertyCellDictionary.Add("Subcontract-DP_Diff", "D10")
+        End If
+
+
+    End Sub
+
 End Class

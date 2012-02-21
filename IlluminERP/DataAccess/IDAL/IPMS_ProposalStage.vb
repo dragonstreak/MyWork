@@ -31,6 +31,7 @@ Namespace IDAL
         Function SaveEntity(ByVal entity As PMS_ProposalStage) As Integer
 
         Function GetStageByProposalId(ByVal proposalId As String) As List(Of PMS_ProposalStage)
-
+        Function GetStageComponentMethodologyList(ByVal jobNumber As String) As DataSet
+        Function GetStageComponentCostingFileList(ByVal jobNumber As String) As DataSet
     End Interface
 End Namespace

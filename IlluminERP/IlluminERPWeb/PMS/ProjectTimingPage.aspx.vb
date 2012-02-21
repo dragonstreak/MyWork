@@ -210,8 +210,4 @@ Partial Class PMS_ProjectTimingPage
         Next
     End Sub
 
-    Protected Sub btnInitProjectTiming_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles btnInitProjectTiming.Click
-        Dim jobNumber As String = Page.Request.QueryString("JobNumber")
-        timingBLL.CreateProjectTimingByProposal(jobNumber)
-    End Sub
 End Class

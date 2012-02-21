@@ -52,9 +52,6 @@
         
         }
 
-
-
-
         function OpenConfirm() {
             radconfirm('<h3 style=\'color: #333399;\'>Are you sure?</h3>', confirmCallBackFn, 330, 100, null, 'RadConfirm custom title');
             return false;
@@ -68,10 +65,6 @@
         function AddQuotationTask(sender, eventArgs) {
             $("#btnAddQuotation")[0].click();
             sender.set_autoPostBack(false);
-        }
-
-        function submitFile(sender, e) {
-            $("#btnSubmitFile")[0].click();
         }
 
         function ChangeMethodology() {
@@ -620,30 +613,6 @@
             </div>
             <b class="b5"></b><b class="b6"></b><b class="b7"></b><b class="b8"></b>
         </div>
-           <div class="sharp color1" style="width: 98%">
-            <b class="b1"></b><b class="b2"></b><b class="b3"></b><b class="b4"></b>
-            <div class="content" style="height: 120px">
-                <h3>
-                    Costing file upload</h3>
-                
-                <hr align="left" size="1" style="border-style: dotted; color: Aqua;" noshade />
-                               
-                <div style="clear:both;">
-                <div style="float:left; vertical-align:middle; height:100%">
-                <asp:HyperLink runat="server" Target="_blank" ID="linkFile" Text="Please upload file"></asp:HyperLink>
-                </div>
-                  <div style="float:left;padding:3px; height:100%">
-                  <telerik:RadUpload ID="RadUpload1" Runat="server"                    
-                    OnClientFileSelected="submitFile" 
-                        ControlObjectsVisibility="None" Width="344px"
-                    >
-                </telerik:RadUpload></div>                  
-                </div>
-                  
-                
-            </div>
-            <b class="b5"></b><b class="b6"></b><b class="b7"></b><b class="b8"></b>
-        </div>
     </div>
     </div>
     <telerik:RadAjaxManager runat="server" ID="radajax">
@@ -695,8 +664,7 @@
    <asp:Button ID="btnAddTiming" runat="server" CssClass="hiddenBtn" />
    <asp:Button ID="btnAddQuotation" runat="server" CssClass="hiddenBtn" />
    <asp:Button ID="btnMethodologyChange" runat="server" CssClass="hiddenBtn" />
-   <asp:Button ID="btnMethodologyTypeChange" runat="server" CssClass="hiddenBtn" />
-    <asp:Button ID="btnSubmitFile" runat="server" Text="Submit" Width="0px" Height="0px" CssClass="hiddenBtn"/>
+   <asp:Button ID="btnMethodologyTypeChange" runat="server" CssClass="hiddenBtn" />   
    <asp:HiddenField ID="hiddenMethdologyType" runat="server" />
    <asp:HiddenField ID="hiddenMethdology" runat = "server" />
     </form>

@@ -33,6 +33,19 @@ Namespace BLL
         Public Function GetStageByProposalId(ByVal proposalId As String) As List(Of PMS_ProposalStage)
             Return iEntity.GetStageByProposalId(proposalId)
         End Function
+        Function GetStageComponentMethodologyList(ByVal jobNumber As String) As DataSet
+            Return iEntity.GetStageComponentMethodologyList(jobNumber)
+        End Function
+        ''' <summary>
+        ''' Add on 2012/2/8
+        ''' this method is used to get stage component costing file list.
+        ''' </summary>
+        ''' <param name="jobNumber">Pass the job number</param>
+        ''' <returns>Return the dataset of stage component costing file.</returns>
+        ''' <remarks></remarks>
+        Function GetStageComponentCostingFileList(ByVal jobNumber As String) As DataSet
+            Return iEntity.GetStageComponentCostingFileList(jobNumber)
+        End Function
     End Class
 End Namespace
 

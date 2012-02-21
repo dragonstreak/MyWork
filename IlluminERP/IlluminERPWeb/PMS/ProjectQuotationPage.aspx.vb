@@ -340,8 +340,4 @@ Partial Class PMS_ProjectQuotationPage
 
     End Sub
 
-    Protected Sub btnInitProjectQuotation_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles btnInitProjectQuotation.Click
-        Dim jobNumber As String = Page.Request.QueryString("JobNumber")
-        quotationBLL.CreateProjectQuotationByProposal(jobNumber)
-    End Sub
 End Class

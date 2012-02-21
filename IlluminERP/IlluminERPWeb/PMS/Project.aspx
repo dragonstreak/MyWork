@@ -317,12 +317,14 @@
                      <tr>
                         <td>
                          
-                            <asp:Button ID="btnEstCost" runat="server" Font-Names="Arial" Font-Size="9pt" 
-                                height="28px" Text="Estimated Cost" width="120px" />
-&nbsp;<asp:Button ID="btnActualCost" runat="server" Font-Names="Arial" Font-Size="9pt" height="28px" 
-                                Text="Actual Cost" width="120px" />
-&nbsp;<asp:Button ID="btnanalysis" runat="server" Font-Names="Arial" Font-Size="9pt" height="28px" 
-                                Text="Cost analysis" width="120px" />
+                            <asp:Button ID="btnUploadCost" runat="server" Font-Names="Arial" Font-Size="9pt" 
+                                height="28px" Text="Upload Cost File" width="120px" />
+                                &nbsp;<asp:Button ID="btnEstimateCost" runat="server" Font-Names="Arial" Font-Size="9pt" height="28px" 
+                                Text="Estimate Cost" width="120px" />
+                                &nbsp;<asp:Button ID="btnActualCost" runat="server" Font-Names="Arial" Font-Size="9pt" height="28px" 
+                                                                Text="Actual Cost" width="120px" />
+                                &nbsp;<asp:Button ID="btnCostAnalysis" runat="server" Font-Names="Arial" Font-Size="9pt" height="28px" 
+                                                                Text="Cost analysis" width="120px" />
                         </td>
                      </tr>
                 </tbody>
@@ -529,7 +531,7 @@
 
 
              function openQuotationWin(JobNumber) {
-                 var oWnd = window.radopen("ProposalQuotation.aspx?JobNumber=" + JobNumber, "RadWindow1");
+                 var oWnd = window.radopen("ProjectQuotationPage.aspx?JobNumber=" + JobNumber, "RadWindow1");
                  var bounds = oWnd.getWindowBounds();
                  var x = bounds.x;
                  var y = bounds.y;
@@ -538,7 +540,7 @@
              }
 
              function openScheduleWin(JobNumber) {
-                 var oWnd = window.radopen("ProposalTiming.aspx?JobNumber=" + JobNumber, "RadWindow1");
+                 var oWnd = window.radopen("ProjectTimingPage.aspx?JobNumber=" + JobNumber, "RadWindow1");
                  var bounds = oWnd.getWindowBounds();
                  var x = bounds.x;
                  var y = bounds.y;
@@ -546,6 +548,42 @@
                  return false;
              }
 
+             function openStageComponentCostingFileWin(JobNumber) {
+                 var oWnd = window.radopen("StageComponentCostingFile.aspx?JobNumber=" + JobNumber, "RadWindow1");
+                 var bounds = oWnd.getWindowBounds();
+                 var x = bounds.x;
+                 var y = bounds.y;
+                 oWnd.moveTo(x, 1);
+                 return false;
+             }
+
+             function openEstimateCostWin(JobNumber) {
+                 var oWnd = window.radopen("EstimatedCostPage.aspx?CostType=Estimate&JobNumber=" + JobNumber, "RadWindow1");
+                 var bounds = oWnd.getWindowBounds();
+                 var x = bounds.x;
+                 var y = bounds.y;
+                 oWnd.moveTo(x, 1);
+                 return false;
+             }
+
+             function openActualCostWin(JobNumber) {
+                 var oWnd = window.radopen("EstimatedCostPage.aspx?CostType=Actual&JobNumber=" + JobNumber, "RadWindow1");
+                 var bounds = oWnd.getWindowBounds();
+                 var x = bounds.x;
+                 var y = bounds.y;
+                 oWnd.moveTo(x, 1);
+                 return false;
+             }
+
+             function openCostAnalysisWin(JobNumber) {
+                 var oWnd = window.radopen("ProjectProfit.aspx?JobNumber=" + JobNumber, "RadWindow1");
+                 var bounds = oWnd.getWindowBounds();
+                 var x = bounds.x;
+                 var y = bounds.y;
+                 oWnd.moveTo(x, 1);
+                 return false;
+             }
+             
              function openTeamWin(id) {
                  var oWnd = window.radopen("TeamAssignment.aspx?ProId=" + id, "RadWindow3");
                  var bounds = oWnd.getWindowBounds();

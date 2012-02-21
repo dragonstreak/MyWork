@@ -48,6 +48,14 @@ Namespace SQLServerDAL
             Dim SaveName_parameter As New SqlParameter("@SaveName", SqlDbType.NVarChar, 150)
             SaveName_parameter.Value = entity.SaveName
             paramList.Add(SaveName_parameter)
+            'add bein,2012/2/8
+            Dim ShowName_Actual_parameter As New SqlParameter("@ShowName_Actual", SqlDbType.NVarChar, 150)
+            ShowName_Actual_parameter.Value = entity.ShowName_Actual
+            paramList.Add(ShowName_Actual_parameter)
+            Dim SaveName_Actual_parameter As New SqlParameter("@SaveName_Actual", SqlDbType.NVarChar, 150)
+            SaveName_Actual_parameter.Value = entity.SaveName_Actual
+            paramList.Add(SaveName_Actual_parameter)
+            'add end
             Dim UpdatedDate_parameter = New SqlParameter("@UpdatedDate", SqlDbType.DateTime)
             UpdatedDate_parameter.Value = entity.UpdatedDate
             paramList.Add(UpdatedDate_parameter)
@@ -65,11 +73,11 @@ Namespace SQLServerDAL
             If (entity.id = -1) Then
               identityParameter.Direction = ParameterDirection.Output
               paramList.Add(identityParameter)
-                sql = "insert into t_PMS_ComponentCostingFile(ComponentId,ShowName,SaveName,UpdatedDate,UpdatedBy,CreatedDate,CreatedBy) "
-               sql += "values(@ComponentId,@ShowName,@SaveName,@UpdatedDate,@UpdatedBy,@CreatedDate,@CreatedBy) Select @IdentityId = @@identity  "
+                sql = "insert into t_PMS_ComponentCostingFile(ComponentId,ShowName,SaveName,UpdatedDate,UpdatedBy,CreatedDate,CreatedBy,ShowName_Actual,SaveName_Actual) "
+                sql += "values(@ComponentId,@ShowName,@SaveName,@UpdatedDate,@UpdatedBy,@CreatedDate,@CreatedBy,@ShowName_Actual,@SaveName_Actual) Select @IdentityId = @@identity  "
             Else
             paramList.Add(Id_parameter)
-                  sql = "update t_PMS_ComponentCostingFile set ComponentId = @ComponentId,ShowName = @ShowName,SaveName = @SaveName,UpdatedDate = @UpdatedDate,UpdatedBy = @UpdatedBy,CreatedDate = @CreatedDate,CreatedBy = @CreatedBy where Id =@Id
+                sql = "update t_PMS_ComponentCostingFile set ComponentId = @ComponentId,ShowName = @ShowName,SaveName = @SaveName,UpdatedDate = @UpdatedDate,UpdatedBy = @UpdatedBy,CreatedDate = @CreatedDate,CreatedBy = @CreatedBy,ShowName_Actual=@ShowName_Actual,SaveName_Actual=@SaveName_Actual where Id =@Id"
             End If
             Dim count As Integer
             count = Me.ExecuteNonQuery(sql, paramList.ToArray())
@@ -160,5 +168,7 @@ Namespace SQLServerDAL
                 End If
             End Try
         End Function
+
+       
     End Class
 End Namespace

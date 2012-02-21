@@ -49,5 +49,9 @@ Public Class PMS_ComponentCostingFileBLL
         'as of now ,one component will only has one costing file,so we will return the first entity.
         Return list(0)
     End Function
+    Public Sub SaveCostingFile(ByVal showName As String, ByVal saveName As String, ByVal flag As String)
+
+    End Sub
+
 
 End Class

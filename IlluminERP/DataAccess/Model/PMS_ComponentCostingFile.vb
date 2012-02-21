@@ -34,6 +34,10 @@ Namespace Model
         Private _CreatedDate As Date?
         
         Private _CreatedBy As Integer
+        'Add on 2012/2/8
+        Private _ShowName_Actual As String
+
+        Private _SaveName_Actual As String
         
         Public Sub New()
             MyBase.New
@@ -124,6 +128,28 @@ Namespace Model
             End Get
             Set
                 Me._CreatedBy = value
+            End Set
+        End Property
+
+        'This is the property of ShowName
+        <ColumnMapping("ShowName_Actual")> _
+        Public Property ShowName_Actual() As String
+            Get
+                Return Me._ShowName_Actual
+            End Get
+            Set(ByVal value As String)
+                Me._ShowName_Actual = value
+            End Set
+        End Property
+
+        'This is the property of SaveName
+        <ColumnMapping("SaveName_Actual")> _
+        Public Property SaveName_Actual() As String
+            Get
+                Return Me._SaveName_Actual
+            End Get
+            Set(ByVal value As String)
+                Me._SaveName_Actual = value
             End Set
         End Property
     End Class

@@ -82,7 +82,9 @@ Imports System.Threading
                 Response.Write("</script>")
             Else
                 Session("LoginUserInfo") = MyUserInfo
+
                 FormsAuthentication.RedirectFromLoginPage(MyUserInfo.Code, False)
+
             End If
 
             'strParm = "?userCode=" + strCode

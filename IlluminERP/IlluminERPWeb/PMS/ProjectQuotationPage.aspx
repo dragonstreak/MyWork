@@ -83,8 +83,7 @@
                             <img src="../Images/png/delete_blue.png" alt="" />
                             Close
                         </button>
-                        <asp:Button ID="btnInitProjectQuotation" runat="server" Text="InitProjectQuotation" />
-                       
+                        
                     </span>
                 </p>
             </div>
@@ -96,16 +95,16 @@
         <div class="content" style="height: 500px">
             <h3>
                 <asp:Label ID="labelStatus" runat="server" Text="Quotation"></asp:Label></h3>
-            <hr align="left" size="1" style="border-style: dotted; color: Aqua;" noshade />
-            <div id="spanTotal" runat="server" class="quotationDiv" style="padding:0px" >
+            <hr align="left" size="1" style="border-style: dotted; color: Aqua; display:none" />
+            <div id="spanTotal" runat="server" class="quotationDiv" style="padding:0px;display:none" >
            
             </div>
-            <hr align="left" size="0" style="border-style: dotted; color: Aqua;" noshade />
-            <div id="spanActuralTtal" runat="server" class="quotationDiv" style="padding:0px" >
+            <hr align="left" size="0" style="border-style: dotted; color: Aqua; display:none" />
+            <div id="spanActuralTtal" runat="server" class="quotationDiv" style="padding:0px; display:none" >
            
             </div>
              
-            <hr align="left" size="1" style="border-style: dotted; color: Aqua;" noshade />
+            <hr align="left" size="1" style="border-style: dotted; color: Aqua; display:none" />
 
             <div>
                 <telerik:RadScriptManager ID="RadScriptManager1" runat="server">

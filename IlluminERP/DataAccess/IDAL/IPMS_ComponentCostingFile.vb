@@ -36,5 +36,7 @@ Namespace IDAL
         ''' <returns></returns>
         ''' <remarks></remarks>
         Function GetComponentCostingFile(ByVal componentId As Integer) As List(Of PMS_ComponentCostingFile)
+
+
     End Interface
 End Namespace

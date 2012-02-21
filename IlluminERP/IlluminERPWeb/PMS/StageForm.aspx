@@ -50,18 +50,17 @@
             position: relative;
             overflow: auto;
         }
-        #hiddenBtn
+        
+        .hiddenBtn
         {
-             visibility:hidden
-            }
+             display:none
+        }
          .ImageColumn
          {
         
               background-image:url(../Images/Edit.gif);
               background-repeat:no-repeat;
-              width:60px
-          
-     
+              width:60px          
         }
     </style>
     <script type="text/javascript">
@@ -153,7 +152,7 @@
     </telerik:RadScriptManager>
    
     <div class="wrapper">
-        <div class="sharp color1" style="width: 98%;">
+        <div class="sharp color1" style="width: 98%;display:none">
             <b class="b1"></b><b class="b2"></b><b class="b3"></b><b class="b4"></b>
             <div class="content" style="height: 30px; ">
                 <div style="padding: 3px">

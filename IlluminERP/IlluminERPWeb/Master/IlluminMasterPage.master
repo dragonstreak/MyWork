@@ -31,6 +31,7 @@
             var rollingMSG = new rollingMessage();
             rollingMSG.StartRolling();
         });
+
     </script>
     </asp:ContentPlaceHolder>
    
@@ -42,26 +43,39 @@
         <div id="TopMenuLeftFiller" class="LeftMenuWidth TopMenuHeight">
 
         </div>
-        <div style=" padding:3px 0px;">
-            <ul class="NoMarginPadding">
-                <li>
-                 <a href="../Index/ModuleNavigate.aspx" ModuleName="Index"><span>Index</span></a>
-                </li>
-                <li>
-                 <a href="../PMS/ProposalQuery.aspx?type=pm" ModuleName="Proposal"><span>Proposal</span></a>
-                </li>
-                 <li>
-                 <a href="../PMS/ProjectQuery.aspx?type=query" ModuleName="Project"><span>Project</span></a>
-                </li>
-                 <li>
-                 <a href="../PMS/ProposalQuery.aspx?type=pm" ModuleName="Reporting"><span>Reporting</span></a>
-                </li>
-                 <li>
-                 <a href="../User/UserQuery.aspx" ModuleName="Admin"><span>Admin</span></a>
-                </li>
-            </ul>
+        <div style="padding:0px; margin:0px; float:left;">
+            <div  style="float:left">
+                <ul class="NoMarginPadding">
+                    <li>
+                     <a href="../Index/ModuleNavigate.aspx" ModuleName="Index"><span>Index</span></a>
+                    </li>
+                    <li>
+                     <a href="../PMS/ProposalQuery.aspx?type=pm" ModuleName="Proposal"><span>Proposal</span></a>
+                    </li>
+                     <li>
+                     <a href="../PMS/ProjectQuery.aspx?type=query" ModuleName="Project"><span>Project</span></a>
+                    </li>
+                     <li>
+                     <a href="../PMS/ProposalQuery.aspx?type=pm" ModuleName="Reporting"><span>Reporting</span></a>
+                    </li>
+                     <li>
+                     <a href="../User/UserQuery.aspx" ModuleName="Admin"><span>Admin</span></a>
+                    </li>
+                </ul>
+           </div>
+           <div style="float:right; margin:0px 20px 0px 350px; padding:6px 2px">
+              
+                     <span style=" border:0px; background-image:none">Welcome: <%=CurrentUserName%> &nbsp;&nbsp;</span>
+                     
+                     <span style="border:0px; width:23px; min-width:23px; background-image:none"><img src="../Images/png/logout.png" style=" width:23px; height:23px" /></span>
+                      <a href="../logout.aspx" style="background-image:none; display:inline; font-size:1.1em; margin-top:1px;" id="LogOutLink" >Log Out</a>
+
+           </div>
            
         </div>        
+    </div>
+    <div style="clear:left">
+           
     </div>
     <div id="LeftMenuContainter" class="LeftMenu LeftMenuWidth">
         <uc1:PanelBarMenu ID="PanelBarMenu1" runat="server" />

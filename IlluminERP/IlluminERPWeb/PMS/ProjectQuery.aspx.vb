@@ -115,7 +115,7 @@ Partial Class PMS_ProjectQuery
         ds = Me.ProjectStatusBLL.GetProjectOngoingStatusInfo
         If Not ds Is Nothing Then
             Utils.PageUtils.BindComboBoxList(Me.cbStatus, ds, "id", "projectstatus", 1)
-           
+
             Me.cbStatus.SelectedValue = 4
 
         End If
@@ -323,7 +323,7 @@ Partial Class PMS_ProjectQuery
 
     End Sub
 
-    Protected Sub btnReset_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles btnReset.Click
+    Protected Sub btnReset_Click(ByVal sender As Object, ByVal e As System.EventArgs)
         Me.txtJobNumber.Text = ""
         Me.txtJobName.Text = ""
         Me.txtKeywords.Text = ""
@@ -337,13 +337,13 @@ Partial Class PMS_ProjectQuery
     End Sub
 
 
-    Protected Sub cbSector_SelectedIndexChanged(ByVal sender As Object, ByVal e As Telerik.Web.UI.RadComboBoxSelectedIndexChangedEventArgs) Handles cbSector.SelectedIndexChanged
+    Protected Sub cbSector_SelectedIndexChanged(ByVal sender As Object, ByVal e As Telerik.Web.UI.RadComboBoxSelectedIndexChangedEventArgs)
         If Me.cbSector.SelectedValue > 0 Then
             loadProductCategoryBySector(Me.cbSector.SelectedValue)
         End If
     End Sub
 
-    Protected Sub cbBusinessUnit_SelectedIndexChanged(ByVal sender As Object, ByVal e As Telerik.Web.UI.RadComboBoxSelectedIndexChangedEventArgs) Handles cbBusinessUnit.SelectedIndexChanged
+    Protected Sub cbBusinessUnit_SelectedIndexChanged(ByVal sender As Object, ByVal e As Telerik.Web.UI.RadComboBoxSelectedIndexChangedEventArgs)
         If Me.cbBusinessUnit.SelectedValue > 0 Then
 
             If Me.cbBusinessUnit.SelectedValue > 2 Then
@@ -359,7 +359,7 @@ Partial Class PMS_ProjectQuery
     End Sub
 
 
-    Protected Sub btnMyProposal_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles btnMyProposal.Click
+    Protected Sub btnMyProposal_Click(ByVal sender As Object, ByVal e As System.EventArgs)
         If Not Session("LoginUserInfo") Is Nothing Then
             MyUserinfo = Session("LoginUserInfo")
         End If

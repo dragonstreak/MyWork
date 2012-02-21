@@ -45,7 +45,7 @@
     <DebugType>full</DebugType>
     <DefineDebug>true</DefineDebug>
     <DefineTrace>true</DefineTrace>
-    <OutputPath>bin\Debug\</OutputPath>
+    <OutputPath>..\IlluminERPWeb\Bin\</OutputPath>
     <DocumentationFile>DataAccess.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022,42353,42354,42355</NoWarn>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
@@ -127,6 +127,7 @@
     <Compile Include="BLL\PMS_ComponentBLL.vb" />
     <Compile Include="BLL\PMS_ComponentCostingFileBLL.vb" />
     <Compile Include="BLL\PMS_MethodologyBLL.vb" />
+    <Compile Include="BLL\PMS_OperationCostBLL.vb" />
     <Compile Include="BLL\PMS_PricingCityInfoBLL.vb" />
     <Compile Include="BLL\PMS_PricingDirectCostInfoBLL.vb" />
     <Compile Include="BLL\PMS_PricingSampleCityInfoBLL.vb" />
@@ -198,6 +199,7 @@
     <Compile Include="IDAL\IPMS_Component.vb" />
     <Compile Include="IDAL\IPMS_ComponentCostingFile.vb" />
     <Compile Include="IDAL\IPMS_Methodology.vb" />
+    <Compile Include="IDAL\IPMS_OperationCost.vb" />
     <Compile Include="IDAL\IPMS_ProjectContractFileInfo.vb" />
     <Compile Include="IDAL\IPMS_ProjectContractInfo.vb" />
     <Compile Include="IDAL\IPMS_ProjectQuotation.vb" />
@@ -273,10 +275,12 @@
     <Compile Include="Model\Base_ProDesignRecruitmentSelection.vb" />
     <Compile Include="Model\Base_ProjectStatus.vb" />
     <Compile Include="Model\Base_ProposalRating.vb" />
+    <Compile Include="Model\Enum\ProjectStatus.vb" />
     <Compile Include="Model\PMS_CityCoverage.vb" />
     <Compile Include="Model\PMS_Component.vb" />
     <Compile Include="Model\PMS_ComponentCostingFile.vb" />
     <Compile Include="Model\PMS_Methodology.vb" />
+    <Compile Include="Model\PMS_OperationCost.vb" />
     <Compile Include="Model\PMS_ProjectContractInfo.vb" />
     <Compile Include="Model\PMS_ProjectQuotation.vb" />
     <Compile Include="Model\PMS_ProjectTiming.vb" />
@@ -360,6 +364,7 @@
     <Compile Include="SQLServerDAL\PMS_ComponentCostingFileDAO.vb" />
     <Compile Include="SQLServerDAL\PMS_ComponentDAO.vb" />
     <Compile Include="SQLServerDAL\PMS_MethodologyDAO.vb" />
+    <Compile Include="SQLServerDAL\PMS_OperationCostDAO.vb" />
     <Compile Include="SQLServerDAL\PMS_ProjectContractFileInfoDAO.vb" />
     <Compile Include="SQLServerDAL\PMS_ProjectContractInfoDAO.vb" />
     <Compile Include="SQLServerDAL\PMS_ProjectQuotationDAO.vb" />

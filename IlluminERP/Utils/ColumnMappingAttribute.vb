@@ -171,7 +171,7 @@ Public Class ColumnMappingManage
         Next
     End Sub
     ''' <summary>
-    ''' This methos is used to mapping entity list by datatable.
+    ''' This method is used to mapping entity list by datatable.
     ''' </summary>
     ''' <typeparam name="T">Pass the entity type.</typeparam>
     ''' <param name="entityList">Pass the entity list.</param>
@@ -185,6 +185,21 @@ Public Class ColumnMappingManage
             entityList.Add(entity)
         Next
     End Sub
+    ''' <summary>
+    ''' This method is used to mapping entity list by datarow array
+    ''' </summary>
+    ''' <typeparam name="T">Pass the entity type.</typeparam>
+    ''' <param name="entityList">Pass the entity list.</param>
+    ''' <param name="rowArr">Pass the data row array</param>
+    ''' <remarks></remarks>
+    Public Shared Sub MappingListByDataRowArr(Of T As New)(ByVal entityList As IList(Of T), ByVal rowArr As DataRow())
+        For Each dr As DataRow In rowArr
+            Dim entity As New T
+            MappingEntityByRow(Of T)(entity, dr)
+            entityList.Add(entity)
+        Next
+    End Sub
+
 
     ''' <summary>
     ''' This method is used to mapping list by data reader.
