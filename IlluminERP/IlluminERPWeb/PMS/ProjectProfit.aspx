@@ -10,6 +10,43 @@
         {
             width: inherit;
         }
+        .RevenueTable
+        {
+            border-style:solid;
+            border-width:thin;
+            border-collapse:collapse;
+        }
+        .RevenueTable td
+        {
+            border-style:solid;
+            border-width:thin;
+            font-size:large;
+        }
+        .RevenueTable .FirstLevel
+        {
+             background-color:#800000;
+             font-weight:bold;
+        }
+        .RevenueTable .FirstLevel td
+        {
+              color:White;
+        }
+        .RevenueTable .SecondLevel
+        {
+            background-color:#FFCC99;
+        }
+        .RevenueTable .SecondLevel CostingName
+        {
+            text-indent:2em;
+        }
+        .RevenueTable .ThirdLevel
+        {
+            background-color:#FFFF99;
+        }
+        .RevenueTable .ThirdLevel .CostingName
+        {
+            text-indent:4em;
+        }
     </style>
 </head>
 <body>
@@ -34,9 +71,13 @@
                     <p style="text-align: center; padding-top: 0px">                        
                         <span style="vertical-align: bottom">
                         <%--<asp:Button ID="btnExport" runat="server" Text="ExportToPDF" />--%>
-                        <telerik:RadButton ID="btnExport" runat="server"  Text ="ExportToPDF" Font-Names="Arial" 
+                         <telerik:RadButton ID="btnSave" runat="server"  Text ="SaveRevenue" Font-Names="Arial" 
                             Font-Size="9pt" Width="120px" Skin="Hay"  >
                         <Icon PrimaryIconUrl="~/Images/save.png" PrimaryIconTop="4px" PrimaryIconLeft="5px" PrimaryIconBottom ="4px" />
+                        </telerik:RadButton>
+                        <telerik:RadButton ID="btnExport" runat="server"  Text ="ExportToPDF" Font-Names="Arial" 
+                            Font-Size="9pt" Width="120px" Skin="Hay"  >
+                        <Icon PrimaryIconUrl="~/Images/png/pdf.png" PrimaryIconTop="4px" PrimaryIconLeft="5px" PrimaryIconBottom ="4px" />
                         </telerik:RadButton>
 
 
@@ -49,21 +90,21 @@
     <div class="sharp color1" style="width: 80%; padding-left: 10px">
         <b class="b1"></b><b class="b2"></b><b class="b3"></b><b class="b4">
              </b>
-        <div class="content" style="height: 500px;">
+        <div class="content" style="height: 480px;">
             <h3>
             Costing Analysis
             </h3>
             <hr align="left" size="1" style="border-style: dotted; color: Aqua;" noshade />
             <div>
-                <table style="width: 100%">
-                    <tr>
+                <table  class="RevenueTable"  cellpadding="0" cellspacing="0" style="width: 100%"  >
+                    <tr class="FirstLevel">
                         <td style="width: 120px">
-                            Project Income Statement:
+                            Project Income Statement
                         </td>
                         <td style="width: 100px">
                         </td>
                     </tr>
-                    <tr>
+                    <tr class="SecondLevel">
                         <td>
                             Project Revenue
                         </td>
@@ -71,135 +112,139 @@
                          <asp:Label ID="labelProjectRevenue" runat="server"></asp:Label>
                         </td>
                     </tr>
-                    <tr>
-                        <td>
+                    <tr class="SecondLevel">
+                        <td class="CostingName">
                             &nbsp;&nbsp;Minus:Taxation
                         </td>
                         <td>
                             <asp:Label ID="labelMinusTax" runat="server"></asp:Label>
                         </td>
                     </tr>
-                    <tr>
-                        <td>
+                    <tr class="SecondLevel">
+                        <td class="CostingName">
                             &nbsp;&nbsp;Minus:Direct Costs
                         </td>
                         <td>
                             <asp:Label ID="labelDirectCosts" runat="server"></asp:Label>
                         </td>
                     </tr>
-                    <tr>
-                        <td>
+                    <tr class="ThirdLevel">
+                        <td class="CostingName">
                             &nbsp;&nbsp;&nbsp;&nbsp;SH-FW
                         </td>
                         <td>
                             <asp:Label ID="labelSHFW" runat="server"></asp:Label>
                         </td>
                     </tr>
-                    <tr>
-                        <td>
+                    <tr class="ThirdLevel">
+                        <td class="CostingName">
                             &nbsp;&nbsp;&nbsp;&nbsp;SH-QC
                         </td>
                         <td>
                             <asp:Label ID="labelSHQC" runat="server"></asp:Label>
                         </td>
                     </tr>
-                    <tr>
-                        <td>
+                    <tr class="ThirdLevel">
+                        <td class="CostingName">
                             &nbsp;&nbsp;&nbsp;&nbsp;SH-DP
                         </td>
                         <td>
                             <asp:Label ID="labelSHDP" runat="server"></asp:Label>
                         </td>
                     </tr>
-                    <tr>
-                        <td>
+                    <tr class="ThirdLevel">
+                        <td class="CostingName">
                             &nbsp;&nbsp;&nbsp;&nbsp;SH-Management
                         </td>
                         <td>
                             <asp:Label ID="labelSHManagement" runat="server"></asp:Label>
                         </td>
                     </tr>
-                    <tr>
-                        <td>
+                    <tr class="ThirdLevel">
+                        <td class="CostingName">
                             &nbsp;&nbsp;&nbsp;&nbsp;Subcontract-FW
                         </td>
                         <td>
                             <asp:Label ID="labelSubcontractFW" runat="server"></asp:Label>
                         </td>
                     </tr>
-                    <tr>
-                        <td>
+                    <tr class="ThirdLevel">
+                        <td class="CostingName">
                             &nbsp;&nbsp;&nbsp;&nbsp;Subcontract-QC
                         </td>
                         <td>
                             <asp:Label ID="labelSubcontractQC" runat="server"></asp:Label>
                         </td>
                     </tr>
-                    <tr>
-                        <td>
+                    <tr class="ThirdLevel">
+                        <td class="CostingName">
                             &nbsp;&nbsp;&nbsp;&nbsp;Subcontract-DP
                         </td>
                         <td>
                             <asp:Label ID="labelSubcontractDP" runat="server"></asp:Label>
                         </td>
                     </tr>
-                    <tr>
-                        <td>
+                    <tr class="SecondLevel">
+                        <td class="CostingName">
                             &nbsp;&nbsp;Minus:Staffing
                         </td>
                         <td>
                             <asp:Label ID="labelMinusStaffing" runat="server"></asp:Label>
                         </td>
                     </tr>
-                    <tr>
-                        <td>
+                    <tr class="ThirdLevel">
+                        <td class="CostingName">
                             &nbsp;&nbsp;&nbsp;&nbsp;Illuminera analysts/consultants
                         </td>
                         <td>
-                            <asp:Label ID="labelIllumineraAnalyts" runat="server"></asp:Label>
+                            <%--<asp:Label ID="labelIllumineraAnalyts" runat="server"></asp:Label>--%>
+                            <asp:TextBox  ID = "txtConsultants" runat= "server"></asp:TextBox>
                         </td>
                     </tr>
-                    <tr>
-                        <td>
+                    <tr class="ThirdLevel">
+                        <td class="CostingName">
                             &nbsp;&nbsp;&nbsp;&nbsp;Freelancer
                         </td>
                         <td>
-                            <asp:Label ID="labelFreelancer" runat="server"></asp:Label>
+                            <%--<asp:Label ID="labelFreelancer" runat="server"></asp:Label>--%>
+                            <asp:TextBox ID="txtFreelancer" runat= "server"></asp:TextBox>
                         </td>
                     </tr>
-                    <tr>
-                        <td>
+                    <tr class="SecondLevel">
+                        <td class="CostingName">
                             &nbsp;&nbsp;Minus:Others
                         </td>
                         <td>
                             <asp:Label ID="labelMinusOthers" runat="server"></asp:Label>
                         </td>
                     </tr>
-                    <tr>
-                        <td>
+                    <tr class="ThirdLevel">
+                        <td class="CostingName">
                             &nbsp;&nbsp;&nbsp;&nbsp;Travel/Accommodation
                         </td>
                         <td>
-                            <asp:Label ID="labelTravel" runat="server"></asp:Label>
+                            <%--<asp:Label ID="labelTravel" runat="server"></asp:Label>--%>
+                            <asp:TextBox ID="txtTravel" runat= "server"></asp:TextBox>
                         </td>
                     </tr>
-                    <tr>
-                        <td>
+                    <tr class="ThirdLevel">
+                        <td class="CostingName">
                             &nbsp;&nbsp;&nbsp;&nbsp;Other
                         </td>
                         <td>
-                            <asp:Label ID="labelOther" runat="server"></asp:Label>
+                            <%--<asp:Label ID="labelOther" runat="server"></asp:Label>--%>
+                            <asp:TextBox ID="txtOther" runat= "server"></asp:TextBox>
                         </td>
                     </tr>
-                    <tr>
-                        <td>
+                    <tr class="SecondLevel">
+                        <td class="CostingName">
                             &nbsp;&nbsp;Minus: Management and Overhead
                         </td>
                         <td>
                             <asp:Label ID="labelMinusManagement" runat="server"></asp:Label>
                         </td>
                     </tr>
-                    <tr>
+                    <tr class="FirstLevel">
                         <td>
                             Project Profit
                         </td>
@@ -207,7 +252,7 @@
                         <asp:Label ID="labelProjectProfit" runat="server"></asp:Label>
                         </td>
                     </tr>
-                    <tr>
+                    <tr class="FirstLevel">
                         <td>
                             Project Profit Rate
                         </td>
@@ -216,6 +261,7 @@
                         </td>
                     </tr>
                 </table>
+            
             </div>
         </div>
         <b class="b5"></b><b class="b6"></b><b class="b7"></b><b class="b8"></b>

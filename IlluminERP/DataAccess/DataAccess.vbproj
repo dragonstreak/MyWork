@@ -138,6 +138,7 @@
     <Compile Include="BLL\PMS_ProjectContractFileInfoBLL.vb" />
     <Compile Include="BLL\PMS_ProjectContractInfoBLL.vb" />
     <Compile Include="BLL\PMS_ProjectQuotationBLL.vb" />
+    <Compile Include="BLL\PMS_ProjectRevenueBLL.vb" />
     <Compile Include="BLL\PMS_ProjectTimingBLL.vb" />
     <Compile Include="BLL\PMS_ProposalInfoBLL.vb" />
     <Compile Include="BLL\PMS_ProposalRatingBLL.vb" />
@@ -203,6 +204,7 @@
     <Compile Include="IDAL\IPMS_ProjectContractFileInfo.vb" />
     <Compile Include="IDAL\IPMS_ProjectContractInfo.vb" />
     <Compile Include="IDAL\IPMS_ProjectQuotation.vb" />
+    <Compile Include="IDAL\IPMS_ProjectRevenue.vb" />
     <Compile Include="IDAL\IPMS_ProjectTiming.vb" />
     <Compile Include="IDAL\IPMS_ProposalRating.vb" />
     <Compile Include="IDAL\IPMS_ProposalStage.vb" />
@@ -283,6 +285,7 @@
     <Compile Include="Model\PMS_OperationCost.vb" />
     <Compile Include="Model\PMS_ProjectContractInfo.vb" />
     <Compile Include="Model\PMS_ProjectQuotation.vb" />
+    <Compile Include="Model\PMS_ProjectRevenue.vb" />
     <Compile Include="Model\PMS_ProjectTiming.vb" />
     <Compile Include="Model\PMS_ProposalRatingInfo.vb" />
     <Compile Include="Model\PMS_ProposalStage.vb" />
@@ -368,6 +371,7 @@
     <Compile Include="SQLServerDAL\PMS_ProjectContractFileInfoDAO.vb" />
     <Compile Include="SQLServerDAL\PMS_ProjectContractInfoDAO.vb" />
     <Compile Include="SQLServerDAL\PMS_ProjectQuotationDAO.vb" />
+    <Compile Include="SQLServerDAL\PMS_ProjectRevenueDAO.vb" />
     <Compile Include="SQLServerDAL\PMS_ProjectTimingDAO.vb" />
     <Compile Include="SQLServerDAL\PMS_ProposalRatingDAO.vb" />
     <Compile Include="SQLServerDAL\PMS_ProposalStageDAO.vb" />

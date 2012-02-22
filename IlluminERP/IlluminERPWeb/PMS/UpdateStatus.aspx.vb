@@ -10,6 +10,7 @@ Imports System.Data
 Imports Utils.PageUtils
 Imports Utils
 Imports DataAccess
+
 Partial Class PMS_UpdatStatus
     Inherits System.Web.UI.Page
 
@@ -78,7 +79,7 @@ Partial Class PMS_UpdatStatus
 
     Protected Sub btnSave_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles btnSave.Click
         Dim strId As String = Request.QueryString("Proid")
-        Dim info As New PMS_ProposalInfo
+        Dim info As New Model.PMS_ProposalInfo
 
         info.Id = strId
         info.Status = Me.cbStatus.SelectedValue
